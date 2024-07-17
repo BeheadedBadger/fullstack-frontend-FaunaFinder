@@ -4,7 +4,8 @@ import image from "../assets/FaunaFinderLogo.png"
 function Header() {
     return (
         <div className="header">
-            <img src = {image} alt="logo"/>
+            <img className="header-logo" src={image} alt="logo"/>
+            <i className="glyphicon glyphicon-menu-hamburger"></i>
         </div>
     )
 }
