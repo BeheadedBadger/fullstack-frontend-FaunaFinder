@@ -2,10 +2,10 @@
   background-color: whitesmoke;
 }
 
-.fakecontent {
+.content {
   display: flex;
   flex-direction: row;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 #root {
