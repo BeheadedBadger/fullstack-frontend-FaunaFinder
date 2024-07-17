@@ -33,7 +33,7 @@ function Home() {
 
 
     return <>
-        <div className="container">
+        <div className="container-column">
             <h2>I'm looking for a...</h2>
             <div className="categories">
                 {/*TODO turn these into a component*/}
