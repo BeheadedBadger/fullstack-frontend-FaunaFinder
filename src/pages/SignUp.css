@@ -1,0 +1,91 @@
+.info-text {
+    color: var(--darkpurple);
+}
+
+.info-text h1 {
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+.info-text h5 {
+    font-style: italic;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 60%;
+    padding: 25px;
+    color: var(--lightpurple);
+}
+
+.container-column {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    padding: 10px;
+}
+
+.radio-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    width: 80%;
+}
+
+.radio {
+    padding: 5px;
+    background-color: var(--yellow);
+    outline: 2px solid var(--darkpurple);
+    border-radius: 5px 0 5px 0;
+    width: 60%;
+}
+
+.radio label {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+.radio:hover {
+    background-color: var(--darkpurple);
+    color: var(--yellow);
+}
+
+.radio:active {
+    background-color: var(--darkpurple);
+    color: whitesmoke;
+}
+
+.radio p {
+    padding: 10px;
+}
+
+.radio-symbol {
+    font-size: 30px;
+    padding: 5px;
+}
+
+p {
+    font-weight: bold;
+}
+
+[type=radio] {
+    accent-color: var(--lightpurple);
+    padding: 10px;
+    height:30px;
+}
+
+.successfully-added {
+    color: var(--darkpurple);
+}
