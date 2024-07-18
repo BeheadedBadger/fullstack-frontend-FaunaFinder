@@ -1,20 +1,3 @@
-:root {
-    --purple: #985F99;
-    --palepurple: #9684A1;
-    --lightblue: #B6C9BB;
-    --brightblue: #BFEDC1;
-    background-color: whitesmoke;
-    font-size: 8px;
-    margin: 0;
-}
-/* colours */
-#root {
-    --darkpurple: #312537;
-    --lightpurple: #6C5475;
-    --yellow: #FFC242;
-    color: whitesmoke;
-}
-
 .petcard:hover {
     rotate: 5deg;
 }
