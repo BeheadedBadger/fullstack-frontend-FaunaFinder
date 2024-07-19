@@ -1,3 +1,7 @@
 H2 {
     color: var(--darkpurple);
 }
+
+.container-column {
+   padding: 100px;
+}
