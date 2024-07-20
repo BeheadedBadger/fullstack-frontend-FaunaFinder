@@ -49,9 +49,24 @@
 .header:hover .header-logo {
     transform: skewY(0deg);
     height: 200px;
-    margin: 30px 50px 0px 50px;
+    margin: 30px 50px 0 50px;
 }
 
 .header:hover .glyphicon {
     transform: skewY(0deg);
+}
+
+.header-links {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-links p {
+    padding: 10px;
+    color: var(--lightpurple);
+    font-size: 12px;
 }

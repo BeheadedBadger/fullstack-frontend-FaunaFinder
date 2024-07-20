@@ -1,6 +1,8 @@
 import './Home.css';
 import { GiSandSnake, GiRat, GiDove, GiScarabBeetle, GiTropicalFish, GiPawHeart } from "react-icons/gi";
-import {useNavigate} from "react-router";
+import {useNavigate} from "react-router-dom";
+import StandardButton from "../components/StandardButton";
+import React from "react";
 
 function Home() {
 
@@ -36,14 +38,13 @@ function Home() {
         <div className="container-column">
             <h2>I'm looking for a...</h2>
             <div className="categories">
-                {/*TODO turn these into a component*/}
-                <button onClick={navigateToMammals} className="category"><GiRat className="glyphicon-animals"/>Mammal</button>
-                <button onClick={navigateToReptiles} className="category"><GiSandSnake className="glyphicon-animals"/>Reptile</button>
-                <button onClick={navigateToBirds} className="category"><GiDove className="glyphicon-animals"/>Bird</button>
-                <button onClick={navigateToInvertebrates} className="category"><GiScarabBeetle className="glyphicon-animals"/>Invertebrate</button>
-                <button onClick={navigateToFish} className="category"><GiTropicalFish className="glyphicon-animals"/>Fish</button>
+                <StandardButton onclick={navigateToMammals} size="large" icon={<GiRat/>} text="Mammal"/>
+                <StandardButton onclick={navigateToReptiles} size="large" icon={<GiSandSnake/>} text="Reptile"/>
+                <StandardButton onclick={navigateToBirds} size="large" icon={<GiDove/>} text="Bird"/>
+                <StandardButton onclick={navigateToInvertebrates} size="large" icon={<GiDove/>} text="Invertebrate"/>
+                <StandardButton onclick={navigateToFish} size="large" icon={<GiTropicalFish/>} text="Fish"/>
             </div>
-            <button onClick={navigateToAllAnimals} className="any-category"><GiPawHeart className="glyphicon-animals"/>I don't know! Show me all the animals!</button>
+            <StandardButton onclick={navigateToAllAnimals} size="medium-large" icon={<GiPawHeart/>} text="I don't know! Show me all the animals!"/>
         </div>
     </>
 }
