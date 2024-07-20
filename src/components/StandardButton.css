@@ -1,0 +1,108 @@
+button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 -5px 0 inset, rgba(100, 100, 111, 0.2) 0 5px 10px 0;;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: var(--yellow);
+}
+button p {
+    margin-top: 10px;
+}
+button .button-icon {
+    font-size: 100px;
+    margin-top: 10px;
+}
+
+button:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0 -2px 0 inset;
+    background-color: var(--yellow);
+}
+button:hover p {
+    margin-top: 15px;
+}
+button:hover .button-icon {
+    margin-top: 15px;
+}
+button:active {
+    box-shadow: rgba(100, 100, 111, 0.2) 0 3px 7px inset;
+}
+button:active p {
+    margin-top: 17px;
+}
+button:active .button-icon {
+    margin-top: 18px;
+}
+
+.small {
+    height: 50px;
+    width: 100px;
+}
+.small p {
+    margin-top: 5px;
+}
+.small:hover p {
+    margin-top: 10px;
+}
+.small:active p {
+    margin-top: 12px
+}
+.small .button-icon {
+    margin-top: 5px;
+}
+.small:hover .button-icon {
+    margin-top: 10px;
+}
+.small:active .button-icon {
+    margin-top: 12px;
+}
+
+.medium {
+    height: 50px;
+    width: 200px;
+}
+
+.medium-large {
+    height: 100px;
+    width: 300px;
+    color: var(--darkpurple);
+}
+.medium-large .button-icon {
+   font-size: 50px;
+}
+
+.large {
+    height: 200px;
+    width: 200px;
+    flex-direction: column;
+    box-shadow: rgba(20, 20, 20, 0.2) 0 -10px 0 inset, rgba(100, 100, 111, 0.2) 0 5px 10px 0;;
+    font-size: 24px;
+    background-color: var(--lightpurple);
+}
+.large:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0 -5px 0 inset, rgba(100, 100, 111, 0.2) 0 5px 10px 0;;
+}
+.large .button-icon {
+    font-size: 100px;
+    height: 100px;
+    width: 100px;
+}
+.large:hover .button-icon {
+    margin-top: 10px;
+}
+.large:hover p {
+    margin-top: 10px;
+}
+.large:active .button-icon {
+    margin-top: 17px;
+}
+.large:active {
+    box-shadow: rgba(100, 100, 111, 0.2) 0 3px 15px inset;
+}
+.large:active p {
+    margin-top: 10px;
+}

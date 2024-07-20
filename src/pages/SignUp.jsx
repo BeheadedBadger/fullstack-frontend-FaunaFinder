@@ -4,8 +4,7 @@ import "./SignUp.css";
 import {FaHouseUser, FaUserPlus} from "react-icons/fa";
 import {FaShieldCat} from "react-icons/fa6";
 import AuthContextProvider, {AuthContext} from "../context/AuthContext";
-import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiSnake, GiTropicalFish} from "react-icons/gi";
-import CustomRadioButton from "../components/CustomRadioButton";
+import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 import StandardButton from "../components/StandardButton";
 
 function SignUp() {
@@ -107,6 +106,7 @@ function SignUp() {
                             </div>
                         </label>
                     </div>
+                    {(role === "ADMIN") && <p>Once submitted, our existing admins will contact you to approve or reject your application asap.</p>}
                     {(role === "SHELTER") && <div className="input-box">
                         <p>What type of animals does your shelter/rescue specialize in?</p>
                         <input type="radio" id="mammals" value="Mammals" checked={speciality === "Mammals"}
@@ -167,8 +167,9 @@ function SignUp() {
                             </div>
                         </label>
                     </div>}
-                    <button type="submit" value="Submit">Submit</button>
-                </form>}
+                    <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>
+                </form>
+            }
     </div>
 }
 

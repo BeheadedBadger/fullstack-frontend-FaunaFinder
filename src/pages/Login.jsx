@@ -1,47 +1,34 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "./Login.css"
-import AuthContextProvider, {AuthContext} from "../context/AuthContext";
+import { AuthContext } from '../context/AuthContext';
 
 function Login(){
-    const [error, setError] = React.useState(null);
-    const [loggedIn, toggleLoggedIn] = React.useState(false);
+    const [error, toggleError] = useState(false);
     const [password, setPassword] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const [role, setRole] = React.useState("");
-    const {AuthContextProvider, fetchUserData} = useContext(AuthContext);
+    const { login, isAuth, user } = useContext(AuthContext);
 
     async function logIn(e) {
         e.preventDefault();
-        toggleLoggedIn(false);
-        setError(null);
+        toggleError(false);
 
         try {
-            const response = await axios.post('http://localhost:8080/login', {
+            const result = await axios.post('http://localhost:8080/login', {
                 username: username,
                 password: password,
             });
-
-            if (response.data.access_token != null) {
-                let token = response.data.access_token;
-                localStorage.setItem("Token", token);
-
-                toggleLoggedIn(true);
-                try {
-                    const result = await axios.get(`http://localhost:8080/users/${username}`)
-                    setRole(result.data.role);
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-        } catch (error) {
-            setError(error);
+            login(result.data.access_token);
+        } catch(e) {
+            console.log(e);
+            toggleError(true);
         }
     }
 
     return <div className="container-column">
-    {(role && loggedIn) && <><h2>Welcome {username}</h2><h2>({role})!</h2></>}
-    {!loggedIn &&
+        {error && <div className="error-text">Something went wrong</div>}
+        {(isAuth.isAuth && isAuth.user) && <><h2>Welcome {isAuth.user.username}</h2><h2>({isAuth.user.role})!</h2></>}
+        {!(isAuth.isAuth) &&
         <form onSubmit={logIn}>
             <label htmlFor="username"><p>Username:</p>
                 <input type="text" id="username" value={username}

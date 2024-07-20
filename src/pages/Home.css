@@ -23,12 +23,6 @@
     border-radius: 10px;
 }
 
-.glyphicon-animals{
-    width: 100px;
-    height: 100px;
-    color: whitesmoke;
-}
-
 .any-category {
     display: flex;
     flex-direction: row;
