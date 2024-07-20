@@ -6,6 +6,7 @@ import {FaShieldCat} from "react-icons/fa6";
 import AuthContextProvider, {AuthContext} from "../context/AuthContext";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiSnake, GiTropicalFish} from "react-icons/gi";
 import CustomRadioButton from "../components/CustomRadioButton";
+import StandardButton from "../components/StandardButton";
 
 function SignUp() {
 
@@ -72,6 +73,7 @@ function SignUp() {
                         </div>
                     </div>
                     <p>As a:</p>
+                    {/*TODO turn these radio buttons into components with callback function*/}
                     <div className="radio-container">
                         <input type="radio" id="user" value="User" checked={role === "USER"}
                                className="user"
@@ -165,7 +167,6 @@ function SignUp() {
                             </div>
                         </label>
                     </div>}
-
                     <button type="submit" value="Submit">Submit</button>
                 </form>}
     </div>
