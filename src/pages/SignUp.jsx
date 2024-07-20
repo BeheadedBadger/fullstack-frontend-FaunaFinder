@@ -3,6 +3,7 @@ import React from "react";
 import "./SignUp.css";
 import {FaHouseUser, FaUserPlus} from "react-icons/fa";
 import {FaShieldCat} from "react-icons/fa6";
+import StandardButton from "../components/StandardButton";
 
 function SignUp() {
 
@@ -74,8 +75,8 @@ function SignUp() {
                         </label>
                     </div>
                 </div>
-                <button type="submit" value="Submit">Submit</button>
-            </form>}
+                    <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>
+                </form>}
     </div>
 }
 

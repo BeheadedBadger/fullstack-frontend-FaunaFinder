@@ -1,0 +1,40 @@
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: #D6D6E7 0 -5px 0 inset;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+button p {
+    margin-top: 10px;
+}
+
+button:hover {
+    box-shadow: #D6D6E7 0 -2px 0 inset;
+}
+
+button:hover p {
+    margin-top: 13px;
+}
+
+button:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+}
+
+button:active p {
+    margin-top: 15px;
+}
+
+.small {
+    height: 50px;
+    width: 50px;
+}
+
+.medium {
+    height: 50px;
+    width: 200px;
+}
