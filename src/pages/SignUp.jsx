@@ -3,7 +3,7 @@ import React, {useContext} from "react";
 import "./SignUp.css";
 import {FaHouseUser, FaUserPlus} from "react-icons/fa";
 import {FaShieldCat} from "react-icons/fa6";
-import AuthContextProvider, {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../context/AuthContext";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 import StandardButton from "../components/StandardButton";
 
@@ -16,7 +16,18 @@ function SignUp() {
     const [username, setUsername] = React.useState("");
     const [image, setImage] = React.useState(null);
     const [speciality, setSpeciality] = React.useState("");
-    const { AuthContextProvider } = useContext(AuthContext);
+    const [previewURLPhoto, setPreviewURLPhoto] = React.useState("");
+    const { sendImage, login } = useContext(AuthContext);
+
+    function handleImageChange(e) {
+        e.preventDefault();
+        const uploadedImage = e.target.files[0];
+        setImage(uploadedImage);
+        console.log(URL.createObjectURL(uploadedImage));
+        console.log(uploadedImage)
+
+        setPreviewURLPhoto(URL.createObjectURL(uploadedImage));
+    }
 
     async function addUser(e) {
         e.preventDefault();
@@ -28,25 +39,26 @@ function SignUp() {
                 username: username,
                 password: password,
                 role: role,
-                image: image,
+                speciality: speciality,
             });
 
-            console.log(response.data);
+            console.log(response);
+            localStorage.setItem("token", response.data.access_token);
+            console.log(response);
             if (response.data.access_token != null) {
-                toggleAddedSuccess(true);
+                if (image != null) {
+                    sendImage(e, username, image)
+                }
+                login(localStorage.getItem("token"));
             }
+
+            toggleAddedSuccess(true);
         } catch (error) {
             setError(error);
         }
     }
 
     return <div className="container-column">
-        {/*User already logged in?*/}
-
-        {/*Unlock shelter options if shelter is selected*/}
-
-        {/*required and non-required fields*/}
-
         <div className="info-text">
             <h1>Sign up!</h1> <h5>Unlock more features by signing up for your own FaunaFinder account.</h5>
         </div>
@@ -58,22 +70,27 @@ function SignUp() {
                             <label htmlFor="username"><p>Username:</p>
                                 <input type="text" id="username" value={username}
                                        onChange={(e) => setUsername(e.target.value)}></input>
+                                {!username && <p><em>required field</em></p>}
+                                {username && <p><em></em></p>}
                             </label>
                             <label htmlFor="password"><p>Password:</p>
                                 <input type="password" id="password" value={password}
                                        onChange={(e) => setPassword(e.target.value)}></input>
-                            </label>
+                                {!password && <p><em>required field</em></p>}
+                                {password && <p><em></em></p>}
+                                </label>
                         </div>
                         <div className="input-block">
                             <p>Profile picture:</p>
                             <label htmlFor="image">
-                                <input type="file" onChange={(e) => setImage(e.target.value)}></input>
+                                <input type="file" name="image-field" id="image" onChange={(e) => handleImageChange(e)}></input>
                             </label>
+                            {previewURLPhoto && <img className="preview-avatar" src = {previewURLPhoto} alt="preview"/>}
                         </div>
                     </div>
                     <p>As a:</p>
                     {/*TODO turn these radio buttons into components with callback function*/}
-                    <div className="radio-container">
+                    <div className="container-row"><div className="radio-container">
                         <input type="radio" id="user" value="User" checked={role === "USER"}
                                className="user"
                                onChange={() => setRole("USER")}/>
@@ -105,6 +122,8 @@ function SignUp() {
                                     <div className="off"><p>Admin</p> <FaShieldCat className="radio-symbol"/></div>}
                             </div>
                         </label>
+                        </div>
+                        {!role && <p><em>required field</em></p>}
                     </div>
                     {(role === "ADMIN") && <p>Once submitted, our existing admins will contact you to approve or reject your application asap.</p>}
                     {(role === "SHELTER") && <div className="input-box">
@@ -167,7 +186,10 @@ function SignUp() {
                             </div>
                         </label>
                     </div>}
-                    <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>
+                    {(username === "" || password === "" || role === "") && <> <StandardButton disabled = {true} size="medium" text="Submit"/>
+                        <p>not all required fields filled in</p>
+                       </>}
+                    {!(username === "" || password === "" || role === "") && <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>}
                 </form>
             }
     </div>

@@ -8,7 +8,7 @@ export const AuthContext = createContext( {} );
 function AuthContextProvider( { children } ) {
     const [ isAuth, toggleIsAuth ] = useState( {
         isAuth: false,
-        user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null},
+        user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
         status: 'pending',
     } );
     const navigate = useNavigate();
@@ -24,15 +24,15 @@ function AuthContextProvider( { children } ) {
         } else {
             toggleIsAuth( {
                 isAuth: false,
-                user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: []},
+                user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
                 status: 'done',
             } );
         }
     }, [] );
 
     function login( JWT ) {
-        localStorage.setItem( 'token', JWT );
-        const decoded = jwtDecode( JWT );
+        console.log(localStorage.getItem( 'token' ));
+        const decoded = jwtDecode( localStorage.getItem( 'token' ) );
 
         void fetchUserData( decoded.sub, JWT, '/profile' );
     }
@@ -41,7 +41,7 @@ function AuthContextProvider( { children } ) {
         localStorage.clear();
         toggleIsAuth( {
             isAuth: false,
-            user: null,
+            user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
             status: 'done',
         } );
 
@@ -49,7 +49,45 @@ function AuthContextProvider( { children } ) {
         navigate( '/' );
     }
 
+    async function sendImage(e, id, image) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('file', image);
+        let token = localStorage.getItem( 'token' );
+
+        try {
+            const result = await axios.post(`http://localhost:8080/users/${id}/photo`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: image,
+            });
+            console.log(result);
+        }
+        catch (e) {
+            console.error( e );
+        }
+    }
+
     async function fetchUserData( id, token, redirectUrl ) {
+        let dataUrl = null;
+
+        try {
+            const download = await axios.get( `http://localhost:8080/users/${id}/photo`, {
+                headers: {
+                    Authorization: `Bearer ${ token }`,
+                },
+                responseType: "arraybuffer"});
+            console.log( download );
+            const blob = new Blob([download.data], { type: 'image/png' });
+            dataUrl = URL.createObjectURL(blob);
+            console.log( dataUrl );
+        }
+        catch(e) {
+            console.error( e );
+        }
+
         try {
             const result = await axios.get( `http://localhost:8080/users/${ id }`, {
                 headers: {
@@ -58,16 +96,20 @@ function AuthContextProvider( { children } ) {
                 },
             } );
 
-            console.log( result.data );
+            console.log(result.data);
+
             toggleIsAuth({
-                isAuth: true,
-                user: {username: result.data.username,
+                user: {
+                    username: result.data.username,
                     role: result.data.role,
                     speciality: result.data.speciality,
-                    favourites: result.data.favouriteAnimals,
+                    favourites: result.data.favourites,
                     shelterAnimals: result.data.shelterAnimals,
-                    donations: result.data.donations},
+                    donations: result.data.donations,
+                    userPhoto: dataUrl,
+                },
                 status: 'done',
+                isAuth: true,
             } );
 
             if ( redirectUrl ) {
@@ -78,7 +120,7 @@ function AuthContextProvider( { children } ) {
             console.error( e );
             toggleIsAuth( {
                 isAuth: false,
-                user: null,
+                user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
                 status: 'done',
             } );
         }
@@ -87,7 +129,8 @@ function AuthContextProvider( { children } ) {
     const contextData = {
         isAuth,
         login,
-        logout
+        logout,
+        sendImage,
     };
 
     return (

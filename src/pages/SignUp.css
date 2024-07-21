@@ -42,7 +42,11 @@ label {
     align-items: center;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     width: 80%;
-    margin: 10px;
+    margin: 10px 10px 10px;
+}
+
+.input-container {
+    margin-bottom: 30px;
 }
 
 .radio-container {
@@ -60,6 +64,26 @@ label {
     align-items: center;
     text-align: center;
     vertical-align: middle;
+}
+
+.preview-avatar {
+    max-width: 100px;
+    max-height: 100px;
+    min-height: 100px;
+    min-width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 25px;
+}
+
+em {
+   font-size: 10px;
+    margin: -5px;
+    width: 200px;
+}
+
+p {
+    width: 100%;
 }
 
 .input-container p {
