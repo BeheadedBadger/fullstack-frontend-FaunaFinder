@@ -8,7 +8,7 @@ function AuthContextProvider({ children }) {
         isAuthenticated: false,
         role: "",
         user: "",
-        fetchUserData,
+        fetchUserData
     } );
 
     async function fetchUserData( username ) {

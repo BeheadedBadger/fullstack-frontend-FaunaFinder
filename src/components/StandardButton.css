@@ -38,6 +38,9 @@ button:active .button-icon {
     margin-top: 18px;
 }
 
+.small .button-icon {
+    font-size: 30px;
+}
 .small {
     height: 50px;
     width: 100px;

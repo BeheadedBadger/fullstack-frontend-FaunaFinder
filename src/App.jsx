@@ -20,7 +20,7 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/profile" element={isLoggedIn === true ? <Profile/> : <Navigate to="/Login"/>}/>
+                    <Route path="/profile" element={isLoggedIn === true ? <Profile/> : <Navigate to="/signin"/>}/>
                     <Route path="/signin" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/animals" element={<Animals/>}/>

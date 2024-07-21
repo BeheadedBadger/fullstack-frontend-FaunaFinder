@@ -28,6 +28,7 @@ function SignUp() {
                 username: username,
                 password: password,
                 role: role,
+                speciality: speciality,
                 image: image,
             });
 
