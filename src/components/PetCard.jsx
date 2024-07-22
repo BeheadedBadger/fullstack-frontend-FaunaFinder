@@ -8,7 +8,7 @@ function PetCard({name, species, sex, age, img, description, isSpecialneeds, war
             <div className="pc-info-container">
                 <article>
                     <div className="pc-info"><h5>{species} ♂ {age} years</h5></div>
-                    <img className="pc-photo" src={img} alt="Picture of {name}"></img></article>
+                    <img className="pc-photo" src={img} alt="Picture of the animal"></img></article>
                 {/*<div className="pc-description"><p>{description}</p></div>*/}
                 {/*Location where the animal is currently kept*/}
             </div>

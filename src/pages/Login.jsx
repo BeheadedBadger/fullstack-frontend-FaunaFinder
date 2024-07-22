@@ -7,7 +7,7 @@ function Login(){
     const [error, toggleError] = useState(false);
     const [password, setPassword] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const { login, isAuth, user } = useContext(AuthContext);
+    const { login, loggedIn, user } = useContext(AuthContext);
 
     async function logIn(e) {
         e.preventDefault();
@@ -18,8 +18,9 @@ function Login(){
                 username: username,
                 password: password,
             });
-            localStorage.setItem('token', result.data.access_token);
-            login(result.data.access_token);
+            localStorage.setItem("token", result.data.access_token);
+            let token = result.data.access_token;
+            login(token);
         } catch(e) {
             console.log(e);
             toggleError(true);
@@ -28,7 +29,7 @@ function Login(){
 
     return <div className="container-column">
         {error && <div className="error-text">Something went wrong</div>}
-        {!(isAuth.isAuth) &&
+        {!(loggedIn) &&
         <form onSubmit={logIn}>
             <label htmlFor="username"><p>Username:</p>
                 <input type="text" id="username" value={username}

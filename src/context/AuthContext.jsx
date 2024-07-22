@@ -2,46 +2,77 @@ import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import React from "react";
+
 
 export const AuthContext = createContext( {} );
 
 function AuthContextProvider( { children } ) {
-    const [ isAuth, toggleIsAuth ] = useState( {
-        isAuth: false,
-        user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
+    const [ isAuth, setAuth ] = useState( {
+        loggedIn: false,
+        user: {
+            username : "",
+            role : "",
+            speciality: "",
+            favourites: [],
+            shelterAnimals: [],
+            donations: [],
+            userPhoto: "",
+        },
         status: 'pending',
     } );
+
     const navigate = useNavigate();
 
-    useEffect( () => {
-        const token = localStorage.getItem( 'token' );
 
-        console.log( token === true );
-        if ( token === true ) {
-            console.log( token );
-            const decoded = jwtDecode( token );
-            void fetchUserData( decoded.sub, token );
+    useEffect( () => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            const decoded = jwtDecode(token);
+            void fetchUserData(decoded.sub, token);
+
+            console.log("Did find token");
+
         } else {
-            toggleIsAuth( {
-                isAuth: false,
-                user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
+            setAuth({
+                loggedIn: false,
+                user: {
+                    username : "",
+                    role : "",
+                    speciality: "",
+                    favourites: [],
+                    shelterAnimals: [],
+                    donations: [],
+                    userPhoto: "",},
                 status: 'done',
-            } );
+            });
+
+            console.log("Failed to get token.")
         }
-    }, [] );
+    }, [localStorage.getItem('token')] );
 
     function login( JWT ) {
-        console.log(localStorage.getItem( 'token' ));
-        const decoded = jwtDecode( localStorage.getItem( 'token' ) );
+        localStorage.setItem("token", JWT);
+        const decoded = jwtDecode( JWT );
+        console.log(decoded.sub, JWT);
 
         void fetchUserData( decoded.sub, JWT, '/profile' );
     }
 
     function logout() {
         localStorage.clear();
-        toggleIsAuth( {
-            isAuth: false,
-            user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
+        setAuth( {
+            loggedIn: false,
+            user: {
+                username : "",
+                role : "",
+                speciality: "",
+                favourites: [],
+                shelterAnimals: [],
+                donations: [],
+                userPhoto: "",
+            },
             status: 'done',
         } );
 
@@ -71,7 +102,7 @@ function AuthContextProvider( { children } ) {
     }
 
     async function fetchUserData( id, token, redirectUrl ) {
-        let dataUrl = null;
+        let dataUrl = "";
 
         try {
             const download = await axios.get( `http://localhost:8080/users/${id}/photo`, {
@@ -79,64 +110,82 @@ function AuthContextProvider( { children } ) {
                     Authorization: `Bearer ${ token }`,
                 },
                 responseType: "arraybuffer"});
-            console.log( download );
             const blob = new Blob([download.data], { type: 'image/png' });
             dataUrl = URL.createObjectURL(blob);
-            console.log( dataUrl );
+            console.log( "Added image" );
         }
         catch(e) {
             console.error( e );
         }
 
         try {
-            const result = await axios.get( `http://localhost:8080/users/${ id }`, {
+            const result = await axios.get( `http://localhost:8080/users/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${ token }`,
                 },
             } );
 
-            console.log(result.data);
+            let userData = result.data;
+            console.log( "Collected user data" );
 
-            toggleIsAuth({
+            setAuth( {
+                isAuth,
+                loggedIn : true,
                 user: {
-                    username: result.data.username,
-                    role: result.data.role,
-                    speciality: result.data.speciality,
-                    favourites: result.data.favourites,
-                    shelterAnimals: result.data.shelterAnimals,
-                    donations: result.data.donations,
+                    username : userData.username,
+                    role : userData.role,
+                    speciality: userData.speciality,
+                    favourites: userData.favourites,
+                    shelterAnimals: userData.shelterAnimals,
+                    donations: userData.donations,
                     userPhoto: dataUrl,
                 },
-                status: 'done',
-                isAuth: true,
-            } );
+                status: "done",
+            });
 
-            if ( redirectUrl ) {
-                navigate( redirectUrl );
-            }
+            console.log(userData.username + " " + userData.role + userData.speciality);
+
+            console.log(isAuth)
+
+            navigateToProfile();
 
         } catch ( e ) {
-            console.error( e );
-            toggleIsAuth( {
-                isAuth: false,
-                user: {username: null, role: null, speciality: null, favourites: null, shelterAnimals: [], donations: null, userPhoto: null},
+            console.log( "error occurred collecting user data" );
+            setAuth( {
+                loggedIn: false,
+                user: {
+                    username : "",
+                    role : "",
+                    speciality: "",
+                    favourites: [],
+                    shelterAnimals: [],
+                    donations: [],
+                    userPhoto: "",
+                },
                 status: 'done',
             } );
         }
     }
 
+    const navigateToProfile = () => {
+        console.log(isAuth.loggedIn);
+        navigate('/profile');
+        console.log("Why u no navigate?");
+    }
+
     const contextData = {
-        isAuth,
-        login,
-        logout,
-        sendImage,
+        isAuth : isAuth,
+        login : login,
+        logout : logout,
+        loggedIn : isAuth.loggedIn,
+        user : isAuth.user,
     };
 
     return (
         <AuthContext.Provider value={ contextData }>
-            { isAuth.status === 'done' && children }
-            { isAuth.status === 'pending' && <p>Loading...</p> }
+            { (isAuth.status === 'done') && children }
+            { (isAuth.status === 'pending') && <p>Loading...</p> }
         </AuthContext.Provider>
     );
 }

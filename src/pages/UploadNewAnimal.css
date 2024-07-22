@@ -1,0 +1,30 @@
+.error{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: darkred;
+    margin: 50px;
+    padding: 10px;
+    font-weight: bolder;
+    height: 300px;
+}
+
+.error h4{
+    padding: 10px;
+}
+
+.error-icon-container {
+    background-color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 5px solid darkred;
+}
+
+.error-icon {
+    font-size: 50px;
+}

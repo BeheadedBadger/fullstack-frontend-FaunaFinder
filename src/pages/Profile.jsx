@@ -3,15 +3,15 @@ import { AuthContext } from '../context/AuthContext';
 
 function Profile() {
 
-    const { login, isAuth, user } = useContext(AuthContext);
+    const { login, loggedIn, user } = useContext(AuthContext);
 
-    console.log(isAuth);
+    console.log( "Arrived on profile. logged in: " + loggedIn +", user: " + user.username );
+    console.log(user);
     return <div className="container-column">
-        {(isAuth.isAuth) && <>
-            <h2>Welcome {isAuth.user.username}</h2>
-            <h2>({isAuth.user.role})!</h2>
-            {console.log(isAuth.user.userPhoto)}
-            {isAuth.user.username && <img src={isAuth.user.userPhoto} alt="profile picture"/>}
+        {(loggedIn) && <>
+            <h2>Welcome {user.username}</h2>
+            <h2>({user.role})!</h2>
+            {user.userPhoto && <img src={user.userPhoto} alt="profile picture"/>}
         </>}
     </div>
 }

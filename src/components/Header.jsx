@@ -21,7 +21,7 @@ function Header() {
     };
 
     const navigateToUpload = () => {
-        navigate('/upload');
+        navigate('/newanimal');
     };
 
     const navigateToProfile = () => {

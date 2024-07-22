@@ -8,12 +8,12 @@ import SignUp from "./pages/SignUp.jsx"
 import Animals from "./pages/Animals.jsx"
 import Shelters from "./pages/Shelters.jsx"
 import WallOfFame from "./pages/WallOfFame.jsx"
-import React, {useContext, useState} from 'react';
+import UploadNewAnimal from "./pages/UploadNewAnimal.jsx"
+import React, {useContext} from 'react';
 import {AuthContext} from './context/AuthContext';
-import {useNavigate} from "react-router-dom";
 
 function App() {
-    const {isAuth} = useContext(AuthContext);
+    const {loggedIn} = useContext(AuthContext);
 
     return (
         <div className="page-container">
@@ -21,12 +21,13 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/profile" element={isAuth.isAuth === true ? <Profile/> : <Navigate to="/signin"/>}/>
+                    <Route path="/profile" element={loggedIn === true ? <Profile/> : <Navigate to="/signin"/>}/>
                     <Route path="/signin" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/animals" element={<Animals/>}/>
                     <Route path="/shelters" element={<Shelters/>}/>
                     <Route path="/walloffame" element={<WallOfFame/>}/>
+                    <Route path="/newanimal" element={<UploadNewAnimal/>}/>
                 </Routes>
             </div>
         </div>

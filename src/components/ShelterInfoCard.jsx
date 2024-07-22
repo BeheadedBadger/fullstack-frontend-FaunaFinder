@@ -8,6 +8,7 @@ import {BsPatchQuestionFill} from "react-icons/bs";
 
 function ShelterInfoCard({speciality, name, profilepic}) {
     return <> <div className="shelter-card">
+        {console.log (name)}
         <div className="title"><h4>{name}</h4>
             <hr/>
             <p>speciality: {speciality}</p>
@@ -18,7 +19,7 @@ function ShelterInfoCard({speciality, name, profilepic}) {
             {(speciality === "Birds") && <GiDove className="speciality-icon"/>}
             {(speciality === "Fish") && <GiSandSnake className="speciality-icon"/>}
             {(speciality === "Invertebrates") && <GiScarabBeetle className="speciality-icon"/>}
-            {!(speciality) && <GiPawHeart classname="speciality-icon"/>}
+            {!(speciality) && <GiPawHeart className="speciality-icon"/>}
         </div>
     </div>
 
