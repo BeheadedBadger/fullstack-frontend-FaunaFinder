@@ -1,3 +1,6 @@
+export class contextData {
+}
+
 .error{
     display: flex;
     flex-direction: column;
@@ -27,4 +30,52 @@
 
 .error-icon {
     font-size: 50px;
+}
+
+h3 {
+    color: var(--darkpurple);
+    margin-bottom: -10px;
+}
+
+.radio-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.required-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+}
+
+.required-fields label {
+    margin: 0;
+}
+
+select {
+    height: 40px;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    width: 80%;
+    margin: 10px 10px 10px;
 }

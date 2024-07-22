@@ -24,13 +24,15 @@ function AuthContextProvider( { children } ) {
 
     const navigate = useNavigate();
 
-
     useEffect( () => {
         const token = localStorage.getItem('token');
 
-        if (token) {
+        console.log(token);
+        if (token !== null && token !== "null") {
             const decoded = jwtDecode(token);
-            void fetchUserData(decoded.sub, token);
+            if (decoded.sub != null) {
+                void fetchUserData(decoded.sub, token);
+            }
 
             console.log("Did find token");
 
@@ -54,10 +56,14 @@ function AuthContextProvider( { children } ) {
 
     function login( JWT ) {
         localStorage.setItem("token", JWT);
-        const decoded = jwtDecode( JWT );
-        console.log(decoded.sub, JWT);
 
-        void fetchUserData( decoded.sub, JWT, '/profile' );
+        console.log(JWT);
+        if (JWT !== null) {
+            const decoded = jwtDecode(JWT);
+            console.log(decoded.sub, JWT);
+
+            void fetchUserData(decoded.sub, JWT, '/profile');
+        }
     }
 
     function logout() {
@@ -80,30 +86,10 @@ function AuthContextProvider( { children } ) {
         navigate( '/' );
     }
 
-    async function sendImage(e, id, image) {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', image);
-        let token = localStorage.getItem( 'token' );
-
-        try {
-            const result = await axios.post(`http://localhost:8080/users/${id}/photo`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: image,
-            });
-            console.log(result);
-        }
-        catch (e) {
-            console.error( e );
-        }
-    }
-
     async function fetchUserData( id, token, redirectUrl ) {
         let dataUrl = "";
 
+        console.log(id);
         try {
             const download = await axios.get( `http://localhost:8080/users/${id}/photo`, {
                 headers: {
@@ -113,8 +99,10 @@ function AuthContextProvider( { children } ) {
             const blob = new Blob([download.data], { type: 'image/png' });
             dataUrl = URL.createObjectURL(blob);
             console.log( "Added image" );
+            console.log(dataUrl);
         }
         catch(e) {
+            console.log("Did not find image")
             console.error( e );
         }
 
@@ -171,7 +159,6 @@ function AuthContextProvider( { children } ) {
     const navigateToProfile = () => {
         console.log(isAuth.loggedIn);
         navigate('/profile');
-        console.log("Why u no navigate?");
     }
 
     const contextData = {
@@ -180,6 +167,7 @@ function AuthContextProvider( { children } ) {
         logout : logout,
         loggedIn : isAuth.loggedIn,
         user : isAuth.user,
+        fetchUserData : fetchUserData,
     };
 
     return (

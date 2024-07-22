@@ -3,10 +3,9 @@ import { AuthContext } from '../context/AuthContext';
 
 function Profile() {
 
-    const { login, loggedIn, user } = useContext(AuthContext);
+    const { fetchUserData, loggedIn, user } = useContext(AuthContext);
 
-    console.log( "Arrived on profile. logged in: " + loggedIn +", user: " + user.username );
-    console.log(user);
+    console.log( "Arrived on profile. logged in: " + loggedIn + ", user: " + user.username + ", image: " + user.image  );
     return <div className="container-column">
         {(loggedIn) && <>
             <h2>Welcome {user.username}</h2>

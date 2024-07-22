@@ -7,7 +7,7 @@ function Login(){
     const [error, toggleError] = useState(false);
     const [password, setPassword] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const { login, loggedIn, user } = useContext(AuthContext);
+    const { login, loggedIn, fetchUserData } = useContext(AuthContext);
 
     async function logIn(e) {
         e.preventDefault();
@@ -21,6 +21,7 @@ function Login(){
             localStorage.setItem("token", result.data.access_token);
             let token = result.data.access_token;
             login(token);
+            fetchUserData();
         } catch(e) {
             console.log(e);
             toggleError(true);
