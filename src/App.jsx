@@ -10,9 +10,10 @@ import Shelters from "./pages/Shelters.jsx"
 import WallOfFame from "./pages/WallOfFame.jsx"
 import React, {useContext, useState} from 'react';
 import {AuthContext} from './context/AuthContext';
+import {useNavigate} from "react-router-dom";
 
 function App() {
-    const {isLoggedIn, stateChangeHandler} = useContext(AuthContext);
+    const {isAuth} = useContext(AuthContext);
 
     return (
         <div className="page-container">
@@ -20,7 +21,7 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/profile" element={isLoggedIn === true ? <Profile/> : <Navigate to="/signin"/>}/>
+                    <Route path="/profile" element={isAuth.isAuth === true ? <Profile/> : <Navigate to="/signin"/>}/>
                     <Route path="/signin" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/animals" element={<Animals/>}/>

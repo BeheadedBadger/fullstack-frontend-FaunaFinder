@@ -18,6 +18,14 @@ button .button-icon {
     margin-top: 10px;
 }
 
+button:disabled {
+    background-color: #E6DBAC;
+    color: white;
+}
+button:disabled:hover {
+    background-color: #E6DBAC;
+    color: white;
+}
 button:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0 -2px 0 inset;
     background-color: var(--yellow);

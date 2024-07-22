@@ -18,6 +18,7 @@ function Login(){
                 username: username,
                 password: password,
             });
+            localStorage.setItem('token', result.data.access_token);
             login(result.data.access_token);
         } catch(e) {
             console.log(e);
@@ -27,7 +28,6 @@ function Login(){
 
     return <div className="container-column">
         {error && <div className="error-text">Something went wrong</div>}
-        {(isAuth.isAuth && isAuth.user) && <><h2>Welcome {isAuth.user.username}</h2><h2>({isAuth.user.role})!</h2></>}
         {!(isAuth.isAuth) &&
         <form onSubmit={logIn}>
             <label htmlFor="username"><p>Username:</p>
