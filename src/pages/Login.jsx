@@ -20,8 +20,8 @@ function Login(){
             });
             localStorage.setItem("token", result.data.access_token);
             let token = result.data.access_token;
+            console.log(token);
             login(token);
-            fetchUserData();
         } catch(e) {
             console.log(e);
             toggleError(true);

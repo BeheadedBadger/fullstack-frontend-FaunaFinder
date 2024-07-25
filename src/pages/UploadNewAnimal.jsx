@@ -1,5 +1,4 @@
-import { AuthContext } from '../context/AuthContext';
-import React, { useContext, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import "./UploadNewAnimal.css"
 import {PiWarningOctagonFill} from "react-icons/pi";
 import StandardButton from "../components/StandardButton.jsx";
@@ -8,7 +7,6 @@ import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-
 import axios from "axios";
 
 function UploadNewAnimal(){
-    const {loggedIn, user} = useContext(AuthContext);
     const [status, setStatus] = useState("");
     const navigate = useNavigate();
 
@@ -44,6 +42,12 @@ function UploadNewAnimal(){
     const [previewURLPhoto, setPreviewURLPhoto] = React.useState("");
     const [image, setImage] = React.useState(null);
 
+    let username = null;
+    let role = null;
+    let loggedIn = false;
+    let token = null;
+
+
     const navigateToSignIn = () => {
         navigate('/signin');
     };
@@ -55,16 +59,23 @@ function UploadNewAnimal(){
     useEffect(() => {
         async function checkCred() {
 
+            loggedIn = localStorage.getItem("loggedin")
+            username = localStorage.getItem("user_username");
+            role = localStorage.getItem("user_role");
+            token = localStorage.getItem("token");
+
+            console.log("On loading the page, the token is:" + token);
+
             if (!loggedIn) {
                 console.log("Login first");
                 setStatus("Login");
             }
-            if (loggedIn && user.role !== "SHELTER") {
+            if (loggedIn && role !== "SHELTER") {
                 console.log("You need to be logged in as a shelter")
                 setStatus("NotShelter");
             }
 
-            if (loggedIn && user.role === "SHELTER") {
+            if (loggedIn && role === "SHELTER") {
                 console.log("Nice! You can upload animals.")
                 setStatus("Authorized");
             }
@@ -91,32 +102,32 @@ function UploadNewAnimal(){
         }
     }
 
-    async function addAnimal() {
-        console.log("Add animal attempt")//toggleAddedSuccess(false);
-        //setError(null);
-        const token = localStorage.getItem('token');
+    async function addAnimal(e) {
+        e.preventDefault();
+        console.log("Add animal attempt");
+
+        token = localStorage.getItem("token");
 
         try {
-            const response = await axios.post('http://localhost:8080/animals', {
-                    name : name,
-                    age : age,
-                    sex : sex,
-                    commonSpeciesName : commonSpeciesName,
-                    scientificSpeciesName : scientificSpeciesName,
-                    warning : warning,
-                    warningExplanation : warningExplanation,
-                    description : description,
-                    category : category,
-                    shelter: user.username
-            },{
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            console.log(response);
-            const id = response.data.id;
+            const result = await axios.post("http://localhost:8080/animals",
+                {
+                        name: name,
+                        age: age,
+                        sex: sex,
+                        commonSpeciesName: commonSpeciesName,
+                        scientificSpeciesName: scientificSpeciesName,
+                        warning: warning,
+                        warningExplanation: warningExplanation,
+                        description: description,
+                        category: category
+                    },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+            console.log(result);
+            const id = result.data.id;
             console.log("Successfully added animal.");
 
             if (image !== null) {

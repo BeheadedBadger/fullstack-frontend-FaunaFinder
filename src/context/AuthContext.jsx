@@ -27,14 +27,11 @@ function AuthContextProvider( { children } ) {
     useEffect( () => {
         const token = localStorage.getItem('token');
 
-        console.log(token);
         if (token !== null && token !== "null") {
             const decoded = jwtDecode(token);
             if (decoded.sub != null) {
                 void fetchUserData(decoded.sub, token);
             }
-
-            console.log("Did find token");
 
         } else {
             setAuth({
@@ -49,20 +46,16 @@ function AuthContextProvider( { children } ) {
                     userPhoto: "",},
                 status: 'done',
             });
-
-            console.log("Failed to get token.")
         }
-    }, [localStorage.getItem('token')] );
+    }, [] );
 
-    function login( JWT ) {
+    async function login(JWT) {
         localStorage.setItem("token", JWT);
 
-        console.log(JWT);
         if (JWT !== null) {
             const decoded = jwtDecode(JWT);
-            console.log(decoded.sub, JWT);
-
-            void fetchUserData(decoded.sub, JWT, '/profile');
+            await void fetchUserData(decoded.sub, JWT);
+            navigateToProfile();
         }
     }
 
@@ -86,10 +79,11 @@ function AuthContextProvider( { children } ) {
         navigate( '/' );
     }
 
-    async function fetchUserData( id, token, redirectUrl ) {
+    async function fetchUserData( id, token ) {
         let dataUrl = "";
 
         console.log(id);
+
         try {
             const download = await axios.get( `http://localhost:8080/users/${id}/photo`, {
                 headers: {
@@ -98,11 +92,8 @@ function AuthContextProvider( { children } ) {
                 responseType: "arraybuffer"});
             const blob = new Blob([download.data], { type: 'image/png' });
             dataUrl = URL.createObjectURL(blob);
-            console.log( "Added image" );
-            console.log(dataUrl);
         }
         catch(e) {
-            console.log("Did not find image")
             console.error( e );
         }
 
@@ -115,7 +106,12 @@ function AuthContextProvider( { children } ) {
             } );
 
             let userData = result.data;
-            console.log( "Collected user data" );
+
+
+            localStorage.setItem("user_username", result.data.username);
+            localStorage.setItem("user_role", result.data.role);
+            localStorage.setItem("loggedin", true);
+
 
             setAuth( {
                 isAuth,
@@ -131,12 +127,6 @@ function AuthContextProvider( { children } ) {
                 },
                 status: "done",
             });
-
-            console.log(userData.username + " " + userData.role + userData.speciality);
-
-            console.log(isAuth)
-
-            navigateToProfile();
 
         } catch ( e ) {
             console.log( "error occurred collecting user data" );
@@ -157,7 +147,6 @@ function AuthContextProvider( { children } ) {
     }
 
     const navigateToProfile = () => {
-        console.log(isAuth.loggedIn);
         navigate('/profile');
     }
 

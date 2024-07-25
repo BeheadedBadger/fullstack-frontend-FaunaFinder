@@ -41,7 +41,6 @@ function SignUp() {
                 },
                 //body: image,
             });
-            console.log(result);
         }
         catch (error) {
             console.error( error );
@@ -52,7 +51,6 @@ function SignUp() {
         toggleAddedSuccess(false);
         logout();
         setError(null);
-        console.log("Trying to add user...")
 
         try {
             const response = await axios.post('http://localhost:8080/register', {
@@ -64,15 +62,11 @@ function SignUp() {
 
             const token = response.data.access_token;
             localStorage.setItem("token", token);
-            console.log("Successfully added and received a token.");
-
             if (image !== null) {
-                console.log(image);
                 await sendImage(token, username, image);
             }
 
             toggleAddedSuccess(true);
-            console.log("Added user");
         } catch (error) {
             setError(error);
         }
