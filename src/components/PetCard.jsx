@@ -1,15 +1,22 @@
 import React from 'react';
 import "./PetCard.css";
+import {IoPaw} from "react-icons/io5";
 
-function PetCard({name, id, image, age, species, warning, warningtext}) {
+function PetCard({name, sex, id, image, age, species, warning, warningtext}) {
 
     return (
         <div className="petcard">
             <div className="pc-title"><h3>{name}</h3><h3>♡</h3></div>
             <div className="pc-info-container">
                 <article>
-                    <div className="pc-info"><h5>{species} ♂ {age} years</h5></div>
+                    <div className="pc-info"><h5>{species}
+                        {(sex === "M") && <> ♂ </>}
+                        {(sex === "F") && <> ♀ </>}
+                        {(sex === "X") && <> ⚥ </>}
+                        {(sex === "U") && <> ? </>}
+                        {age} years</h5></div>
                     {image && <img className="pc-photo" src={image} alt="Picture of the animal"></img>}</article>
+                {!image && <div className="pc-photo"> <div className="filler-img-container"><IoPaw className="filler-img"/></div></div>}
                 {/*<div className="pc-description"><p>{description}</p></div>*/}
                 {/*Location where the animal is currently kept*/}
             </div>
