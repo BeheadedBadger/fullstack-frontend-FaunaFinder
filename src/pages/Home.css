@@ -1,5 +1,7 @@
-.container h2 {
-    color: var(--dark-purple)
+.container-column h2 {
+    color: var(--darkpurple);
+    margin: 50px;
+    font-weight: 200;
 }
 
 .categories {
@@ -37,7 +39,6 @@
     margin: 30px;
     color: var(--darkpurple);
     border: 0;
-    font-weight: bold;
 }
 
 .any-category .glyphicon-animals{

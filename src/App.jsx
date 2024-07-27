@@ -25,6 +25,7 @@ function App() {
                     <Route path="/signin" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/animals" element={<Animals/>}/>
+                    <Route path="/animals/:category" element={<Animals/>} />
                     <Route path="/shelters" element={<Shelters/>}/>
                     <Route path="/walloffame" element={<WallOfFame/>}/>
                     <Route path="/newanimal" element={<UploadNewAnimal/>}/>

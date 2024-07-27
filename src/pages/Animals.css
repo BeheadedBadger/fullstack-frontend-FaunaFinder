@@ -6,3 +6,31 @@ ul {
     justify-content: center;
     align-items: center;
 }
+
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+}
+
+.empty h3 {
+    color: gray;
+}
+
+.empty .error-icon-container {
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 5px solid gray;
+}
+
+.error-icon {
+    font-size: 50px;
+    color: gray;
+}
