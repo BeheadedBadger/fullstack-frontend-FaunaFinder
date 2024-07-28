@@ -12,11 +12,11 @@ ul {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 50px;
+    padding: 100px 50px 50px;
 }
 
 .empty h3 {
-    color: gray;
+    color: lightgrey;
 }
 
 .empty .error-icon-container {
@@ -27,10 +27,54 @@ ul {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 5px solid gray;
+    border: 5px solid lightgrey;
 }
 
 .error-icon {
     font-size: 50px;
-    color: gray;
+    color: lightgrey;
+}
+
+.category-buttons-animals {
+    display: flex;
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+}
+
+.category-buttons-animals button {
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: none;
+}
+
+.category-buttons-animals .button-icon {
+    font-size: 30px;
+    margin-top: 0;
+}
+
+.category-buttons-animals button:hover .button-icon {
+    margin-top: 5px;
+}
+
+.category-buttons-animals button:active .button-icon {
+    margin-top: 6px;
+}
+
+.category-buttons-animals .off {
+    color: lightgrey;
+    padding: 10px;
+    border: 2px solid lightgrey;
+    background-color: whitesmoke;
+}
+
+.category-buttons-animals .on {
+    color: var(--darkpurple);
+    background-color: var(--yellow);
+    border: 0 solid;
+    line-height: 50px;
 }
