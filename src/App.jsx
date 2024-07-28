@@ -11,6 +11,7 @@ import WallOfFame from "./pages/WallOfFame.jsx"
 import UploadNewAnimal from "./pages/UploadNewAnimal.jsx"
 import React, {useContext} from 'react';
 import {AuthContext} from './context/AuthContext';
+import AnimalDetails from "./pages/AnimalDetails.jsx";
 
 function App() {
     const {loggedIn} = useContext(AuthContext);
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/animals" element={<Animals/>}/>
                     <Route path="/animals/:category" element={<Animals/>} />
+                    <Route path="/animals/details/:id" element={<AnimalDetails/>}/>
                     <Route path="/shelters" element={<Shelters/>}/>
                     <Route path="/walloffame" element={<WallOfFame/>}/>
                     <Route path="/newanimal" element={<UploadNewAnimal/>}/>
