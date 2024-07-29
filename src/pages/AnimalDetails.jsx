@@ -43,7 +43,7 @@ function AnimalDetails() {
                     {localAnimal.warningExplanation && <p>Warnings: {localAnimal.warningExplanation}</p>}
                     <hr/>
                     <h5>Interested in {localAnimal.name}? Contact:</h5>
-                    <p>Shelter: {localAnimal.shelter}</p>
+                    <p>Shelter: {localAnimal.shelter.username}</p>
                 </div>
         </div>}
         {(!localAnimal && status==="done") && <p>Animal not found</p>}

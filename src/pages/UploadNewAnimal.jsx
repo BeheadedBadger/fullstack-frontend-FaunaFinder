@@ -47,7 +47,6 @@ function UploadNewAnimal(){
     let loggedIn = false;
     let token = null;
 
-
     const navigateToSignIn = () => {
         navigate('/signin');
     };
@@ -130,9 +129,26 @@ function UploadNewAnimal(){
             const id = result.data.id;
             console.log("Successfully added animal.");
 
+            //Assign to shelter
+            try {
+                const assigntoshelter = await axios.put(`http://localhost:8080/users/${localStorage.getItem("user_username")}/${id}`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                console.log(assigntoshelter);
+            }
+            catch (e) {
+                console.error(e);
+            }
+
+            //Upload image
             if (image !== null) {
                 console.log(image);
-                await sendImage(token, id, image);
+                await sendImage(localStorage.getItem("token"), id, image);
             }
 
             console.log("Finished adding animal");
