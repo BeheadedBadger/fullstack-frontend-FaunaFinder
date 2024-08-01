@@ -6,7 +6,8 @@ import {FaShieldCat} from "react-icons/fa6";
 import {AuthContext} from "../context/AuthContext";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 import StandardButton from "../components/StandardButton";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {PiUserCircleCheck} from "react-icons/pi";
 
 function SignUp() {
 
@@ -19,17 +20,17 @@ function SignUp() {
     const [speciality, setSpeciality] = React.useState("");
     const [previewURLPhoto, setPreviewURLPhoto] = React.useState("");
     const { login, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     function handleImageChange(e) {
         e.preventDefault();
-
         const uploadedImage = e.target.files[0];
         setImage(e.target.files[0]);
 
         setPreviewURLPhoto(URL.createObjectURL(uploadedImage));
     }
 
-    async function sendImage(token, id, image) {
+    async function sendImage(id, image) {
         const formData = new FormData();
         formData.append('file', image);
 
@@ -37,9 +38,8 @@ function SignUp() {
             const result = await axios.post(`http://localhost:8080/users/${id}/photo`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${ token }`,
+                    Authorization: `Bearer ${ localStorage.getItem("token") }`,
                 },
-                //body: image,
             });
         }
         catch (error) {
@@ -47,9 +47,9 @@ function SignUp() {
         }
     }
 
-    async function addUser() {
+    async function addUser(e) {
+        e.preventDefault();
         toggleAddedSuccess(false);
-        logout();
         setError(null);
 
         try {
@@ -63,7 +63,7 @@ function SignUp() {
             const token = response.data.access_token;
             localStorage.setItem("token", token);
             if (image !== null) {
-                await sendImage(token, username, image);
+                await sendImage(username, image);
             }
 
             toggleAddedSuccess(true);
@@ -73,10 +73,22 @@ function SignUp() {
     }
 
     return <div className="container-column">
-        <div className="info-text">
+        {!addedSuccess && <div className="info-text">
             <h1>Sign up!</h1> <h5>Unlock more features by signing up for your own FaunaFinder account.</h5>
-        </div>
-            {addedSuccess && <p className="successfully-added">Account created successfully! You can now log in.</p>}
+        </div>}
+        {addedSuccess && <div className="successfully-added"> <PiUserCircleCheck className="user-added-icon"/>
+            <h4>Account created successfully! You can now</h4>
+                <Link
+                    to="signin"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/signin");
+                    }}
+                >
+                    <h3>log in -></h3>
+                </Link>
+            </div>}
+
             {!addedSuccess &&
                 <form onSubmit={addUser}>
                     <div className="input-container">

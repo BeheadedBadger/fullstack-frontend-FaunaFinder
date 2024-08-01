@@ -29,6 +29,7 @@ function App() {
                     <Route path="/animals/:category" element={<Animals/>} />
                     <Route path="/animals/details/:id" element={<AnimalDetails/>}/>
                     <Route path="/shelters" element={<Shelters/>}/>
+                    <Route path="/shelters/details/:id" element={<ShelterDetails/>}/>
                     <Route path="/walloffame" element={<WallOfFame/>}/>
                     <Route path="/newanimal" element={<UploadNewAnimal/>}/>
                 </Routes>

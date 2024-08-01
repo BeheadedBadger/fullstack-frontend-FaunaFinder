@@ -126,3 +126,7 @@ p {
 .successfully-added {
     color: var(--darkpurple);
 }
+
+.user-added-icon {
+    font-size: 50px;
+}

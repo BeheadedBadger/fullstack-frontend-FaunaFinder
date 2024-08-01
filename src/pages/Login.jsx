@@ -2,12 +2,20 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "./Login.css"
 import { AuthContext } from '../context/AuthContext';
+import {useNavigate} from "react-router-dom";
 
 function Login(){
     const [error, toggleError] = useState(false);
     const [password, setPassword] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const { login, loggedIn, fetchUserData } = useContext(AuthContext);
+    const { login, loggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loggedIn) {
+            navigate("/profile");
+        }
+    });
 
     async function logIn(e) {
         e.preventDefault();
