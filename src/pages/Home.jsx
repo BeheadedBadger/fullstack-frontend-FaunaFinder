@@ -41,7 +41,7 @@ function Home() {
                 <StandardButton onclick={navigateToMammals} size="large" icon={<GiRat/>} text="Mammal"/>
                 <StandardButton onclick={navigateToReptiles} size="large" icon={<GiSandSnake/>} text="Reptile"/>
                 <StandardButton onclick={navigateToBirds} size="large" icon={<GiDove/>} text="Bird"/>
-                <StandardButton onclick={navigateToInvertebrates} size="large" icon={<GiDove/>} text="Invertebrate"/>
+                <StandardButton onclick={navigateToInvertebrates} size="large" icon={<GiScarabBeetle/>} text="Invertebrate"/>
                 <StandardButton onclick={navigateToFish} size="large" icon={<GiTropicalFish/>} text="Fish"/>
             </div>
             <StandardButton onclick={navigateToAllAnimals} size="medium-large" icon={<GiPawHeart/>} text="I don't know! Show me all the animals!"/>

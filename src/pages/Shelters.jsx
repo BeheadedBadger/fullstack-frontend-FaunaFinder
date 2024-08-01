@@ -4,13 +4,13 @@ import ShelterInfoCard from "../components/ShelterInfoCard.jsx";
 
 function Shelters(){
 
-    const [shelters, setShelters] = useState([{}]);
+    const [shelters, setShelters] = useState([]);
 
     {/*Find all users labeled as shelter*/}
     useEffect(() => {
         async function findAll(e) {
-            let usersFound = [{}];
-            let sheltersFound = [{}];
+            let usersFound = [];
+            let sheltersFound = [];
 
         try {
             const result = await axios.get('http://localhost:8080/users');

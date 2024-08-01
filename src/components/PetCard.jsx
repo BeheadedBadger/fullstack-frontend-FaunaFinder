@@ -1,21 +1,38 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import "./PetCard.css";
+import {IoHeart, IoPaw} from "react-icons/io5";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthContext.jsx";
+import axios from "axios";
 
-function PetCard({name, species, sex, age, img, description, isSpecialneeds, warnings}) {
-    return (<>
-        <div className="petcard">
-            <div className="pc-title"><h3>{name}</h3><h3>♡</h3></div>
+function PetCard({name, sex, id, image, age, species, warning, warningtext}) {
+
+    const navigate = useNavigate();
+    const {user, loggedIn} = useContext(AuthContext);
+    const navigateToAnimal = (id) => {
+        navigate(`/animals/details/${id}`)
+    }
+
+    return (
+        <div className="petcard" onClick={() => navigateToAnimal(id)}>
+            <div className="pc-title"><h3>{name}</h3><IoHeart className="fav-icon"/></div>
             <div className="pc-info-container">
                 <article>
-                    <div className="pc-info"><h5>{species} ♂ {age} years</h5></div>
-                    <img className="pc-photo" src={img} alt="Picture of {name}"></img></article>
-                {/*<div className="pc-description"><p>{description}</p></div>*/}
-                {/*Location where the animal is currently kept*/}
+                    <div className="pc-info"><h5>{species}
+                        {(sex === "M") && <> ♂ </>}
+                        {(sex === "F") && <> ♀ </>}
+                        {(sex === "X") && <> ⚥ </>}
+                        {(sex === "U") && <> ? </>}
+                        {age} years</h5></div>
+                    {image && <img className="pc-photo" src={image} alt="Picture of the animal"></img>}</article>
+                {!image && <div className="pc-photo"> <div className="filler-img-container"><IoPaw className="filler-img"/></div></div>}
             </div>
-            {isSpecialneeds === false && <div className="pc-not-special-needs"> <p> Beginner safe </p></div>}
-            {isSpecialneeds === true && <div className="pc-special-needs"> <div className="warning"><h3>!</h3></div> <p>{warnings}</p></div>}
+            {warning === false && <div className="pc-not-special-needs"><p> Beginner safe </p></div>}
+            {warning === true && <div className="pc-special-needs">
+                <div className="warning"><h3>!</h3></div>
+                <p>{warningtext}</p></div>}
         </div>
-    </>);
+    )
 }
 
 export default PetCard;

@@ -1,155 +1,124 @@
-import Header from "../components/Header";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import PetCard from "../components/PetCard";
+import {AnimalContext} from "../context/AnimalContext.jsx";
+import "./Animals.css";
+import {useNavigate, useParams} from "react-router-dom";
+import {PiWarningOctagonFill} from "react-icons/pi";
+import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 
-function Animals(){
-    return <>
+function Animals() {
+    const {animalData} = useContext(AnimalContext);
+    const {category} = useParams();
+    let filteredAnimals = [];
+    const navigate = useNavigate();
+
+    if (category && animalData.animals) {
+        for (let i = 0; i < animalData.animals.length; i++) {
+            const categoryToCaps = typeof animalData.animals[i].category === 'string' ? animalData.animals[i].category.toUpperCase() : "";
+
+            if (categoryToCaps === category.toUpperCase()) {
+                console.log(animalData.animals[i]);
+                filteredAnimals.push(animalData.animals[i]);
+            }
+        }
+    }
+
+    const navigateToAllAnimals = () => {
+        navigate('/animals');
+    }
+
+    const navigateToMammals = () => {
+        navigate('/animals/mammals');
+    };
+
+    const navigateToReptiles = () => {
+        navigate('/animals/reptiles');
+    };
+
+    const navigateToBirds= () => {
+        navigate('/animals/birds');
+    };
+
+    const navigateToInvertebrates = () => {
+        navigate('/animals/invertebrates');
+    };
+
+    const navigateToFish = () => {
+        navigate('/animals/fish');
+    };
+
+    return (
         <div className="container-row">
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-            <PetCard name="Basil"
-                     species="Ferret"
-                     sex="Male"
-                     age="3"
-                     img="https://pbs.twimg.com/media/FfGo8JnXwAAJ0mM?format=jpg&name=4096x4096"
-                     description="Loveable hyperactive dork! Nothing wrong with him really. Good with cats and dogs. A bit of a picky eater."
-                     isSpecialneeds={false}
-                     warnings="Needs all of your attention all of the time."
-            />
-            <PetCard name="Atl"
-                     species="Boa Constrictor"
-                     sex="Male"
-                     age="16"
-                     img="https://pbs.twimg.com/media/FwCIWPNXwAIZQSP?format=jpg&name=small"
-                     description="Very sweet boa. A little bit shy and prefers to not be handled too much. Can be a bit scared of food due to past trauma. Has quite a few scars, but no active health problems."
-                     isSpecialneeds={true}
-                     warnings="BIG and can bite."
-            />
-        </div>
-    </>
+            <div className="category-buttons-animals">
+                {(category === "mammals") && <button className="on" type="button" onClick={navigateToAllAnimals}>
+                    <p>Mammals</p> <GiRat className="button-icon"/></button>}
+                {!(category === "mammals") && <button className="off" type="button" onClick={navigateToMammals}>
+                    <p>Mammals</p> <GiRat className="button-icon"/></button>}
+
+                {(category === "reptiles") && <button className="on" type="button" onClick={navigateToAllAnimals}>
+                    <p>Reptiles</p> <GiSandSnake className="button-icon"/></button>}
+                {!(category === "reptiles") && <button className="off" type="button" onClick={navigateToReptiles}>
+                    <p>Reptiles</p> <GiSandSnake className="button-icon"/></button>}
+
+                {(category === "birds") && <button className="on" type="button" onClick={navigateToAllAnimals}>
+                    <p>Birds</p> <GiDove className="button-icon"/></button>}
+                {!(category === "birds") && <button className="off" type="button" onClick={navigateToBirds}>
+                    <p>Birds</p> <GiDove className="button-icon"/></button>}
+
+                {(category === "invertebrates") && <button className="on" type="button" onClick={navigateToAllAnimals}>
+                    <p>Bugs</p> <GiScarabBeetle className="button-icon"/></button>}
+                {!(category === "invertebrates") && <button className="off" type="button" onClick={navigateToInvertebrates}>
+                    <p>Bugs</p> <GiScarabBeetle className="button-icon"/></button>}
+
+                {(category === "fish") && <button className="on" type="button" onClick={navigateToAllAnimals}>
+                    <p>Fish</p> <GiTropicalFish className="button-icon"/></button>}
+                {!(category === "fish") && <button className="off" type="button" onClick={navigateToFish}>
+                    <p>Fish</p> <GiTropicalFish className="button-icon"/></button>}
+            </div>
+
+    {(category && filteredAnimals.length < 1 || animalData.animals.length < 1)
+        && <div className="empty">
+            <div className="error-icon-container"><PiWarningOctagonFill className="error-icon"/></div>
+            <h3>No animals found!</h3>
+        </div>}
+
+    {(category && filteredAnimals.length > 0) &&
+        <ul>
+            {filteredAnimals.map(animal => {
+                return (
+                    <li key={animal.id}>
+                        <PetCard name={animal.name}
+                                 sex={animal.sex}
+                                 id={animal.id}
+                                 image={animal.animalPhoto}
+                                 age={animal.age}
+                                 species={animal.commonSpeciesName}
+                                 warning={animal.warning}
+                                 warningtext={animal.warningExplanation}/>
+                    </li>
+                )
+            })}
+        </ul>}
+
+            {(!category && animalData.status === "done" && animalData.animals) &&
+                <ul>
+                    {animalData.animals.map(animal => {
+                        return (
+                            <li key={animal.id}>
+                                <PetCard name={animal.name}
+                                         sex={animal.sex}
+                                         id={animal.id}
+                                         image={animal.animalPhoto}
+                                         age={animal.age}
+                                         species={animal.commonSpeciesName}
+                                         warning={animal.warning}
+                                         warningtext={animal.warningExplanation}/>
+                            </li>
+                        )
+                    })}
+                </ul>
+            }
+        </div>)
 }
 
 export default Animals;

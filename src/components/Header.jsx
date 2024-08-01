@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './Header.css'
 import image from "../assets/FaunaFinderLogo.png"
 import StandardButton from "./StandardButton";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 function Header() {
     const [hover, toggleHover] = React.useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const {logout, loggedIn, user} = useContext(AuthContext);
 
     const navigateToHome = () => {
         navigate('/');
@@ -21,7 +23,7 @@ function Header() {
     };
 
     const navigateToUpload = () => {
-        navigate('/upload');
+        navigate('/newanimal');
     };
 
     const navigateToProfile = () => {
@@ -34,14 +36,19 @@ function Header() {
             {!hover && <i className="glyphicon glyphicon-menu-hamburger"></i>}
             {hover && <div className="header-links">
                 <StandardButton size="small" text="New account" onclick={navigateToRegistration}/>
-                {/*ToDo only show if not logged in*/}
-                <StandardButton size="small" text="Login" onclick={navigateToSignIn}/>
-                {/*ToDo only show if logged in as shelter*/}
-                <StandardButton size="small" text="Upload animals" onclick={navigateToUpload}/>
-                {/*ToDo only show if logged in*/}
-                <StandardButton size="small" text="My profile" onclick={navigateToProfile}/></div>}
-        </div>
-    )
+                {!loggedIn &&
+                    <StandardButton size="small" text="Login" onclick={navigateToSignIn}/>
+                }
+                {(loggedIn && user.role === "SHELTER") &&
+                    <StandardButton size="small" text="Upload animals" onclick={navigateToUpload}/>
+                }
+                {loggedIn && <>
+                    <StandardButton size="small" text="My profile" onclick={navigateToProfile}/>
+                    <StandardButton size="small" text = "Logout" onclick={logout}/>
+                </>
+                }
+            </div>}
+        </div>)
 }
 
 export default Header;

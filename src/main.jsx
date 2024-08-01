@@ -4,13 +4,16 @@ import App from './App.jsx'
 import './index.css'
 import {BrowserRouter} from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext.jsx";
+import AnimalContextProvider, {AnimalContext} from "./context/AnimalContext.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+/*    <React.StrictMode>*/
         <BrowserRouter>
             <AuthContextProvider>
-                <App/>
+                <AnimalContextProvider>
+                    <App/>
+                </AnimalContextProvider>
             </AuthContextProvider>
-        </BrowserRouter>
-    </React.StrictMode>,
+        </BrowserRouter>,
+/*    </React.StrictMode>*/
 )

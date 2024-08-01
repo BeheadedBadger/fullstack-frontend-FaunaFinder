@@ -6,6 +6,7 @@ import {FaShieldCat} from "react-icons/fa6";
 import {AuthContext} from "../context/AuthContext";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 import StandardButton from "../components/StandardButton";
+import {useNavigate} from "react-router-dom";
 
 function SignUp() {
 
@@ -17,21 +18,38 @@ function SignUp() {
     const [image, setImage] = React.useState(null);
     const [speciality, setSpeciality] = React.useState("");
     const [previewURLPhoto, setPreviewURLPhoto] = React.useState("");
-    const { sendImage, login } = useContext(AuthContext);
+    const { login, logout } = useContext(AuthContext);
 
     function handleImageChange(e) {
         e.preventDefault();
+
         const uploadedImage = e.target.files[0];
-        setImage(uploadedImage);
-        console.log(URL.createObjectURL(uploadedImage));
-        console.log(uploadedImage)
+        setImage(e.target.files[0]);
 
         setPreviewURLPhoto(URL.createObjectURL(uploadedImage));
     }
 
-    async function addUser(e) {
-        e.preventDefault();
+    async function sendImage(token, id, image) {
+        const formData = new FormData();
+        formData.append('file', image);
+
+        try {
+            const result = await axios.post(`http://localhost:8080/users/${id}/photo`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${ token }`,
+                },
+                //body: image,
+            });
+        }
+        catch (error) {
+            console.error( error );
+        }
+    }
+
+    async function addUser() {
         toggleAddedSuccess(false);
+        logout();
         setError(null);
 
         try {
@@ -42,14 +60,10 @@ function SignUp() {
                 speciality: speciality,
             });
 
-            console.log(response);
-            localStorage.setItem("token", response.data.access_token);
-            console.log(response);
-            if (response.data.access_token != null) {
-                if (image != null) {
-                    sendImage(e, username, image)
-                }
-                login(localStorage.getItem("token"));
+            const token = response.data.access_token;
+            localStorage.setItem("token", token);
+            if (image !== null) {
+                await sendImage(token, username, image);
             }
 
             toggleAddedSuccess(true);

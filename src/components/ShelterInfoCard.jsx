@@ -18,7 +18,7 @@ function ShelterInfoCard({speciality, name, profilepic}) {
             {(speciality === "Birds") && <GiDove className="speciality-icon"/>}
             {(speciality === "Fish") && <GiSandSnake className="speciality-icon"/>}
             {(speciality === "Invertebrates") && <GiScarabBeetle className="speciality-icon"/>}
-            {!(speciality) && <GiPawHeart classname="speciality-icon"/>}
+            {!(speciality) && <GiPawHeart className="speciality-icon"/>}
         </div>
     </div>
 
