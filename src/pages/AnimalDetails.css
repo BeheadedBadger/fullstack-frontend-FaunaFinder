@@ -15,11 +15,9 @@
     font-weight: 400;
 }
 
-hr {
+.shelter-card hr {
     color: var(--darkpurple);
     border-bottom: var(--darkpurple) solid 1px;
-    width: 60%;
-    padding-top: 20px;
     align-self: center;
 }
 
@@ -37,4 +35,27 @@ hr {
 
 .photo-animal:hover {
     rotate: 2deg;
+}
+
+
+.fav-icon {
+    font-size: 25px;
+    fill: none;
+    stroke: var(--darkpurple);
+    stroke-width: 40px;
+}
+
+.fav-icon:hover {
+    fill: var(--yellow);
+}
+
+.fav-icon:active {
+    fill: var(--darkpurple);
+}
+
+.infavs-icon {
+    font-size: 25px;
+    stroke: var(--darkpurple);
+    stroke-width: 40px;
+    fill: var(--darkpurple);
 }

@@ -12,14 +12,13 @@ function Animals() {
     let filteredAnimals = [];
     const navigate = useNavigate();
 
-    if (category) {
+    if (category && animalData.animals) {
         for (let i = 0; i < animalData.animals.length; i++) {
-            if (animalData.animals[i].category !== null) {
-                console.log(animalData);
+            const categoryToCaps = typeof animalData.animals[i].category === 'string' ? animalData.animals[i].category.toUpperCase() : "";
 
-                if (animalData.animals[i].category.toUpperCase() === category.toUpperCase()) {
-                    filteredAnimals.push(animalData.animals[i]);
-                }
+            if (categoryToCaps === category.toUpperCase()) {
+                console.log(animalData.animals[i]);
+                filteredAnimals.push(animalData.animals[i]);
             }
         }
     }

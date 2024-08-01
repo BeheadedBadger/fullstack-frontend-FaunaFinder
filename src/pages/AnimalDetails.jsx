@@ -1,13 +1,41 @@
 import {useParams} from "react-router-dom";
 import React, {useContext, useState} from "react";
 import {AnimalContext} from "../context/AnimalContext.jsx";
+import axios from "axios";
+import {AuthContext} from "../context/AuthContext.jsx";
+import {IoHeart} from "react-icons/io5";
 import ("./AnimalDetails.css")
 
 function AnimalDetails() {
     const {id} = useParams();
     const {animalData} = useContext(AnimalContext);
+    const {loggedIn, user} = useContext(AuthContext)
     const [localAnimal, setLocalAnimal] = useState(null);
     const [status, setStatus] = useState("starting")
+    const [warning, setWarning] = useState("")
+
+    async function AddToFavourites() {
+        if (loggedIn) {
+            try {
+                const addToFav = await axios.put(`http://localhost:8080/users/fav/${localStorage.getItem("user_username")}/${id}`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    });
+
+                console.log(addToFav);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        else {
+            console.log("Not logged in")
+            setWarning("You have to be logged in to save animals to your favourites.");
+        }
+    }
+
 
     if (status === "starting") {
         setStatus("loading");
@@ -28,11 +56,15 @@ function AnimalDetails() {
 
     return (<>
         {(localAnimal) && <div className="animal-details">
-            {console.log(localAnimal)}
             {localAnimal.animalPhoto &&
                 <img className="photo-animal" src={localAnimal.animalPhoto} alt={localAnimal.name}/> }
                 <div className="text-animal">
-                    <h2>{localAnimal.name}</h2>
+                    <h2>{localAnimal.name}
+                        {console.log(loggedIn + user)}
+                        {loggedIn && user && user.favourites && user.favourites.includes(id) && <p>Already in favs</p>}
+                        <IoHeart className="fav-icon" onClick={AddToFavourites}/>
+                        </h2>
+                    {warning && <p>{warning}</p>}
                     <h5>Sex: {(localAnimal.sex === "M") && <> Male </>}
                         {(localAnimal.sex === "F") && <> Female </>}
                         {(localAnimal.sex === "X") && <> Other </>}

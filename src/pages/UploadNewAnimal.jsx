@@ -86,6 +86,7 @@ function UploadNewAnimal(){
     async function sendImage(token, id, image) {
         const formData = new FormData();
         formData.append('file', image);
+        console.log("On submitting the image the token is " + token);
 
         try {
             const result = await axios.post(`http://localhost:8080/animals/${id}/photo`, formData, {
@@ -106,6 +107,8 @@ function UploadNewAnimal(){
         console.log("Add animal attempt");
 
         token = localStorage.getItem("token");
+
+        console.log("On submitting the animal, the token is: " + token)
 
         try {
             const result = await axios.post("http://localhost:8080/animals",
@@ -281,8 +284,8 @@ function UploadNewAnimal(){
                                 <option value="Royal Python" id="Python Regius">
                                     Royal Python (Python Regius)
                                 </option>
-                                <option value="Corn Snake" id="Pantherophis guttatus">
-                                    Royal Python (Python Regius)
+                                <option value="Corn Snake" id="Pantherophis Guttatus">
+                                    Corn Snake (Pantherophis Guttatus)
                                 </option>
                                 <option value="Other Snakes" id="Other Snakes">
                                     Other snakes
