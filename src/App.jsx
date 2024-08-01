@@ -12,6 +12,7 @@ import UploadNewAnimal from "./pages/UploadNewAnimal.jsx"
 import React, {useContext} from 'react';
 import {AuthContext} from './context/AuthContext';
 import AnimalDetails from "./pages/AnimalDetails.jsx";
+import ShelterDetails from "./pages/ShelterDetails.jsx";
 
 function App() {
     const {loggedIn} = useContext(AuthContext);

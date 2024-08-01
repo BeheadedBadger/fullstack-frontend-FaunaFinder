@@ -30,11 +30,21 @@ function Header() {
         navigate('/profile');
     };
 
+    const navigateToShelters = () => {
+        navigate('/shelters');
+    };
+
+    const navigateToAnimals = () => {
+        navigate('/animals');
+    };
+
     return (
         <div className="header" onMouseEnter={() => toggleHover(true)} onMouseLeave={() => toggleHover(false)}>
             <img onClick={navigateToHome} className="header-logo" src={image} alt="logo"/>
             {!hover && <i className="glyphicon glyphicon-menu-hamburger"></i>}
             {hover && <div className="header-links">
+                <StandardButton size="small" text="Animals" onclick={navigateToAnimals}/>
+                <StandardButton size="small" text="Shelters" onclick={navigateToShelters}/>
                 <StandardButton size="small" text="New account" onclick={navigateToRegistration}/>
                 {!loggedIn &&
                     <StandardButton size="small" text="Login" onclick={navigateToSignIn}/>

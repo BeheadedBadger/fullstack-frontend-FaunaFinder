@@ -12,7 +12,7 @@ function ShelterDetails() {
     }
 
     //Show contact info, speciality, image, etc.
-    return ( <> </>
+    return ( <><h3> Under Construction </h3></>
         //Make UserContext to easily retrieve all user data and display that.
     )
 }

@@ -3,11 +3,12 @@ import "./ShelterInfoCard.css"
 import {FiDollarSign} from "react-icons/fi";
 import StandardButton from "./StandardButton.jsx";
 import {IoIosPaw} from "react-icons/io";
-import {FaQuestion} from "react-icons/fa";
-import {BsPatchQuestionFill} from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
 
 function ShelterInfoCard({speciality, name, profilepic}) {
-    return <> <div className="shelter-card">
+    let navigate= useNavigate();
+
+    return <> <div className="shelter-card" onClick={() => navigate(`/shelters/details/${name}`)}>
         <div className="title"><h4>{name}</h4>
             <hr/>
             <p>speciality: {speciality}</p>

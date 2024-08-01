@@ -92,7 +92,7 @@ function SignUp() {
             {!addedSuccess &&
                 <form onSubmit={addUser}>
                     <div className="input-container">
-                        <div className="input-block">
+                        <div className="input-block-row">
                             <label htmlFor="username"><p>Username:</p>
                                 <input type="text" id="username" value={username}
                                        onChange={(e) => setUsername(e.target.value)}></input>
@@ -213,7 +213,7 @@ function SignUp() {
                         </label>
                     </div>}
                     {(username === "" || password === "" || role === "") && <> <StandardButton disabled = {true} size="medium" text="Submit"/>
-                        <p>not all required fields filled in</p>
+                        Not all required fields have been filled in
                        </>}
                     {!(username === "" || password === "" || role === "") && <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>}
                 </form>
