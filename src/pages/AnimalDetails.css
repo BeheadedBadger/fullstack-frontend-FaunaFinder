@@ -37,6 +37,12 @@
     rotate: 2deg;
 }
 
+.faved-icon {
+    fill: var(--yellow);
+    font-size: 25px;
+    stroke: var(--darkpurple);
+    stroke-width: 40px;
+}
 
 .fav-icon {
     font-size: 25px;

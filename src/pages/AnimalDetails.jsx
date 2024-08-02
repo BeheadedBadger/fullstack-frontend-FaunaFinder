@@ -13,6 +13,7 @@ function AnimalDetails() {
     const [localAnimal, setLocalAnimal] = useState(null);
     const [status, setStatus] = useState("starting")
     const [warning, setWarning] = useState("")
+    const [faved, toggleFaved] = useState(false);
 
     async function AddToFavourites() {
         if (loggedIn) {
@@ -46,8 +47,10 @@ function AnimalDetails() {
             if (externalId.toString() === id.toString()) {
                 console.log("match found");
                 setLocalAnimal(animalData.animals[i])
-                {
-                    console.log(animalData.animals[i].id)
+                for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
+                    if (user && animalData.animals[i].favourites[f].username === user.username) {
+                        toggleFaved(true);
+                    }
                 }
             }
         }
@@ -60,9 +63,8 @@ function AnimalDetails() {
                 <img className="photo-animal" src={localAnimal.animalPhoto} alt={localAnimal.name}/> }
                 <div className="text-animal">
                     <h2>{localAnimal.name}
-                        {console.log(loggedIn + user)}
-                        {loggedIn && user && user.favourites && user.favourites.includes(id) && <p>Already in favs</p>}
-                        <IoHeart className="fav-icon" onClick={AddToFavourites}/>
+                        {faved && <IoHeart className="faved-icon"/>}
+                        {!faved && <IoHeart className="fav-icon" onClick={AddToFavourites}/>}
                         </h2>
                     {warning && <p>{warning}</p>}
                     <h5>Sex: {(localAnimal.sex === "M") && <> Male </>}

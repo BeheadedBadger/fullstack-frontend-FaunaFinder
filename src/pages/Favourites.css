@@ -1,0 +1,14 @@
+.no-favs {
+    color: var(--lightpurple);
+    margin: 50px;
+    font-size: 20px;
+}
+
+.favourites {
+    margin-top: 50px;
+    color: var(--darkpurple);
+}
+
+li {
+    list-style: none;
+}

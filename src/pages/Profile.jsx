@@ -3,11 +3,24 @@ import { AuthContext } from '../context/AuthContext';
 import {FaHouseUser, FaUser, } from "react-icons/fa";
 import {FaShieldCat} from "react-icons/fa6";
 import StandardButton from "../components/StandardButton.jsx";
+import {useNavigate} from "react-router-dom";
 import("./Profile.css");
 
 function Profile() {
-
     const { loggedIn, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const navigateToUpload = () => {
+        navigate('/newanimal');
+    };
+
+    const navigateToShelters = () => {
+        navigate('/shelters');
+    };
+
+    const navigateToFavourites = () => {
+        navigate('/favourites');
+    };
 
     return <div className="profile-content">
     <div className="container-row">
@@ -24,10 +37,16 @@ function Profile() {
     </div>
     <div className="profile-container-column">
         {loggedIn && <div className="profile-buttons">
-            <StandardButton size="medium" text="Option 1" />
-            <StandardButton size="medium" text="Option 2" />
-            <StandardButton size="medium" text="Option 3" />
-        </div>}
+            <div className="text">Suggested actions:</div>
+            {user.role === "USER" && <>
+                <StandardButton size="medium" text="Donate to a shelter" onclick={navigateToShelters}/> </>}
+            {user.role === "SHELTER" && <>
+                <StandardButton size="medium" text="Upload animals" onclick={navigateToUpload}/>
+                {/*TODO add a page where the shelter can see, edit and archive animals*/}
+                <StandardButton size="medium" text="View/edit animals" /> </>}
+            {/*TODO add a favourites page*/}
+            <StandardButton size="medium" text="View favourites" onclick={navigateToFavourites}/>
+            </div>}
     </div>
     </div>
 </div>

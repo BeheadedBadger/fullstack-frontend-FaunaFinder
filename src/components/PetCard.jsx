@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext.jsx";
 import axios from "axios";
 
-function PetCard({name, sex, id, image, age, species, warning, warningtext}) {
+function PetCard({name, sex, id, image, age, species, warning, warningtext, faved}) {
 
     const navigate = useNavigate();
     const {user, loggedIn} = useContext(AuthContext);
@@ -15,7 +15,9 @@ function PetCard({name, sex, id, image, age, species, warning, warningtext}) {
 
     return (
         <div className="petcard" onClick={() => navigateToAnimal(id)}>
-            <div className="pc-title"><h3>{name}</h3><IoHeart className="fav-icon"/></div>
+            <div className="pc-title"><h3>{name}</h3>
+                {(faved === true) && <IoHeart className="faved-icon"/>}
+                {(faved === false) && <IoHeart className="fav-icon"/>}</div>
             <div className="pc-info-container">
                 <article>
                     <div className="pc-info"><h5>{species}

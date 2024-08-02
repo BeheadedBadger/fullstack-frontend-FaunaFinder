@@ -12,6 +12,12 @@
     padding-left: 40%;
 }
 
+.profile-buttons .text {
+    color: var(--darkpurple);
+    text-align: center;
+    width: 100%;
+}
+
 .profile-content {
     max-width: 750px;
     width: 80%;

@@ -5,45 +5,83 @@ import "./Animals.css";
 import {useNavigate, useParams} from "react-router-dom";
 import {PiWarningOctagonFill} from "react-icons/pi";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
+import Loader from "../components/Loader.jsx";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 function Animals() {
     const {animalData} = useContext(AnimalContext);
+    const {user} = useContext(AuthContext);
     const {category} = useParams();
+    const [animalsToDisplay, setAnimalsToDisplay] = useState([]);
     let filteredAnimals = [];
     const navigate = useNavigate();
+    const [status, setStatus] = useState("");
 
-    if (category && animalData.animals) {
-        for (let i = 0; i < animalData.animals.length; i++) {
-            const categoryToCaps = typeof animalData.animals[i].category === 'string' ? animalData.animals[i].category.toUpperCase() : "";
-
-            if (categoryToCaps === category.toUpperCase()) {
-                console.log(animalData.animals[i]);
-                filteredAnimals.push(animalData.animals[i]);
+    {/*Filter animals*/}
+    useEffect(() => {
+        function filter(e) {
+        if (!category)
+            for (let i = 0; i < animalData.animals.length; i++) {
+                for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
+                    if (user.username === animalData.animals[i].favourites[f].username) {
+                        animalData.animals[i].faved = true;
+                    }
+                    else { animalData.animals[i].faved = false; }
             }
         }
-    }
+
+        if (category && animalData.animals) {
+                setStatus("loading");
+                for (let i = 0; i < animalData.animals.length; i++) {
+                    const categoryToCaps = typeof animalData.animals[i].category === 'string' ? animalData.animals[i].category.toUpperCase() : "";
+
+                    console.log(categoryToCaps + " : " + category.toUpperCase());
+                    if (categoryToCaps === category.toUpperCase()) {
+                        console.log(animalData.animals[i]);
+                        for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
+                            if (user.username === animalData.animals[i].favourites[f].username) {
+                                animalData.animals[i].faved = true;
+                            }
+                            else { animalData.animals[i].faved = false; }
+                        }
+                        filteredAnimals.push(animalData.animals[i]);
+                    }
+                }
+                console.log(category + " " + filteredAnimals.length + " " + animalData.animals.length);
+                setAnimalsToDisplay(filteredAnimals);
+                setStatus("done");
+            }
+        }
+        void filter();
+    }, [category]);
+
 
     const navigateToAllAnimals = () => {
         navigate('/animals');
     }
 
     const navigateToMammals = () => {
+        setStatus("loading");
         navigate('/animals/mammals');
     };
 
     const navigateToReptiles = () => {
+        setStatus("loading");
         navigate('/animals/reptiles');
     };
 
     const navigateToBirds= () => {
+        setStatus("loading");
         navigate('/animals/birds');
     };
 
     const navigateToInvertebrates = () => {
+        setStatus("loading");
         navigate('/animals/invertebrates');
     };
 
     const navigateToFish = () => {
+        setStatus("loading");
         navigate('/animals/fish');
     };
 
@@ -76,15 +114,17 @@ function Animals() {
                     <p>Fish</p> <GiTropicalFish className="button-icon"/></button>}
             </div>
 
-    {(category && filteredAnimals.length < 1 || animalData.animals.length < 1)
+    {(status === "loading") && <Loader/>}
+
+    {(category && animalsToDisplay.length < 1 && status === "done" || animalData.animals.length < 1)
         && <div className="empty">
             <div className="error-icon-container"><PiWarningOctagonFill className="error-icon"/></div>
             <h3>No animals found!</h3>
         </div>}
 
-    {(category && filteredAnimals.length > 0) &&
+    {(category && status === "done" && animalsToDisplay.length > 0) &&
         <ul>
-            {filteredAnimals.map(animal => {
+            {animalsToDisplay.map(animal => {
                 return (
                     <li key={animal.id}>
                         <PetCard name={animal.name}
@@ -94,7 +134,8 @@ function Animals() {
                                  age={animal.age}
                                  species={animal.commonSpeciesName}
                                  warning={animal.warning}
-                                 warningtext={animal.warningExplanation}/>
+                                 warningtext={animal.warningExplanation}
+                                faved={animal.faved}/>
                     </li>
                 )
             })}
@@ -112,7 +153,8 @@ function Animals() {
                                          age={animal.age}
                                          species={animal.commonSpeciesName}
                                          warning={animal.warning}
-                                         warningtext={animal.warningExplanation}/>
+                                         warningtext={animal.warningExplanation}
+                                         faved={animal.faved}/>
                             </li>
                         )
                     })}
