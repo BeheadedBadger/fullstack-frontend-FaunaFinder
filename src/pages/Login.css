@@ -5,3 +5,7 @@ H2 {
 .container-column {
    padding: 100px;
 }
+
+.error-text {
+    color: var(--darkpurple);
+}

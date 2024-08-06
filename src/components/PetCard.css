@@ -35,6 +35,10 @@
     margin: 1px;
 }
 
+.pc-title .faved-icon {
+    fill: var(--yellow);
+}
+
 .pc-info-container {
     display: flex;
     flex-direction: column;

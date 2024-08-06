@@ -105,24 +105,19 @@ function AuthContextProvider( { children } ) {
                 },
             } );
 
-            let userData = result.data;
-
-
             localStorage.setItem("user_username", result.data.username);
             localStorage.setItem("user_role", result.data.role);
             localStorage.setItem("loggedin", true);
 
-
             setAuth( {
-                isAuth,
                 loggedIn : true,
                 user: {
-                    username : userData.username,
-                    role : userData.role,
-                    speciality: userData.speciality,
-                    favourites: userData.favourites,
-                    shelterAnimals: userData.shelterAnimals,
-                    donations: userData.donations,
+                    username : result.data.username,
+                    role : result.data.role,
+                    speciality: result.data.speciality,
+                    favourites: result.data.favourites,
+                    shelterAnimals: result.data.shelterAnimals,
+                    donations: result.data.donations,
                     userPhoto: dataUrl,
                 },
                 status: "done",

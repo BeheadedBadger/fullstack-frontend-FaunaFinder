@@ -5,10 +5,12 @@ import StandardButton from "../components/StandardButton.jsx";
 import {useNavigate} from "react-router-dom";
 import {GiDove, GiRat, GiSandSnake, GiScarabBeetle, GiTropicalFish} from "react-icons/gi";
 import axios from "axios";
+import Loader from "../components/Loader.jsx";
 
 function UploadNewAnimal(){
     const [status, setStatus] = useState("");
     const navigate = useNavigate();
+    const [loading, toggleLoading] = useState(false);
 
     /*Animal Info*/
     const [name, setName] = useState("");
@@ -103,6 +105,7 @@ function UploadNewAnimal(){
     }
 
     async function addAnimal(e) {
+        toggleLoading(true);
         e.preventDefault();
         console.log("Add animal attempt");
 
@@ -155,13 +158,18 @@ function UploadNewAnimal(){
             }
 
             console.log("Finished adding animal");
+            toggleLoading(false);
+            setStatus("Done");
         } catch (error) {
             console.log(error);
         }
     }
 
-
     return <div className = "container-row" >
+        {loading && <Loader/>}
+
+        {/*TODO: Make this pretty and add "add another", "view" & "return to profile" here.*/}
+        {status === "Done" && <h3>Animal added successfully!</h3>}
 
         {/*Not signed in*/}
         {status === "Login" &&
@@ -188,7 +196,7 @@ function UploadNewAnimal(){
             </div>}
 
         {/*Logged in AND a shelter*/}
-        {status === "Authorized" &&
+        {(!loading && status === "Authorized") &&
             <div className="container-column">
             <h3>Add Animal:</h3>
             <form onSubmit={addAnimal}>

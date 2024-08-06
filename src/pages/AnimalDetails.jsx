@@ -9,10 +9,11 @@ import ("./AnimalDetails.css")
 function AnimalDetails() {
     const {id} = useParams();
     const {animalData} = useContext(AnimalContext);
-    const {loggedIn, user} = useContext(AuthContext)
+    const {loggedIn, user, fetchUserData} = useContext(AuthContext)
     const [localAnimal, setLocalAnimal] = useState(null);
     const [status, setStatus] = useState("starting")
     const [warning, setWarning] = useState("")
+    const [faved, toggleFaved] = useState(false);
 
     async function AddToFavourites() {
         if (loggedIn) {
@@ -26,6 +27,8 @@ function AnimalDetails() {
                     });
 
                 console.log(addToFav);
+                toggleFaved(true);
+                fetchUserData(user.username, localStorage.getItem("token"));
             } catch (e) {
                 console.error(e);
             }
@@ -36,8 +39,27 @@ function AnimalDetails() {
         }
     }
 
+    async function RemoveFromFavourites() {
+        if (loggedIn) {
+            try {
+                const removeFromFav = await axios.delete(`http://localhost:8080/users/fav/${localStorage.getItem("user_username")}/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    });
 
-    if (status === "starting") {
+                console.log(removeFromFav);
+                toggleFaved(false);
+                fetchUserData(user.username, localStorage.getItem("token"));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
+
+
+                if (status === "starting") {
         setStatus("loading");
         for (let i = 0; i < animalData.animals.length; i++) {
             let externalId = animalData.animals[i].id;
@@ -46,8 +68,10 @@ function AnimalDetails() {
             if (externalId.toString() === id.toString()) {
                 console.log("match found");
                 setLocalAnimal(animalData.animals[i])
-                {
-                    console.log(animalData.animals[i].id)
+                for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
+                    if (user && animalData.animals[i].favourites[f].username === user.username) {
+                        toggleFaved(true);
+                    }
                 }
             }
         }
@@ -60,9 +84,8 @@ function AnimalDetails() {
                 <img className="photo-animal" src={localAnimal.animalPhoto} alt={localAnimal.name}/> }
                 <div className="text-animal">
                     <h2>{localAnimal.name}
-                        {console.log(loggedIn + user)}
-                        {loggedIn && user && user.favourites && user.favourites.includes(id) && <p>Already in favs</p>}
-                        <IoHeart className="fav-icon" onClick={AddToFavourites}/>
+                        {faved && <IoHeart className="faved-icon" onClick={RemoveFromFavourites}/>}
+                        {!faved && <IoHeart className="fav-icon" onClick={AddToFavourites}/>}
                         </h2>
                     {warning && <p>{warning}</p>}
                     <h5>Sex: {(localAnimal.sex === "M") && <> Male </>}

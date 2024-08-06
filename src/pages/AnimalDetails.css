@@ -37,6 +37,21 @@
     rotate: 2deg;
 }
 
+.faved-icon {
+    fill: var(--darkpurple);
+    font-size: 25px;
+    stroke: var(--darkpurple);
+    stroke-width: 40px;
+}
+
+.faved-icon:hover {
+    transition: font-size 0.2s, fill 0.2s, margin 0.2s;
+}
+
+.faved-icon:active {
+    font-size: 15px;
+    margin: 5px;
+}
 
 .fav-icon {
     font-size: 25px;
@@ -46,16 +61,12 @@
 }
 
 .fav-icon:hover {
-    fill: var(--yellow);
+    fill: #cbb3d3;
+    transition: font-size 0.2s, fill 0.2s, margin 0.2s;
 }
 
 .fav-icon:active {
     fill: var(--darkpurple);
-}
-
-.infavs-icon {
-    font-size: 25px;
-    stroke: var(--darkpurple);
-    stroke-width: 40px;
-    fill: var(--darkpurple);
+    font-size: 15px;
+    margin: 5px;
 }

@@ -3,11 +3,17 @@ import "./ShelterInfoCard.css"
 import {FiDollarSign} from "react-icons/fi";
 import StandardButton from "./StandardButton.jsx";
 import {IoIosPaw} from "react-icons/io";
-import {FaQuestion} from "react-icons/fa";
-import {BsPatchQuestionFill} from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
+import {BiSolidDonateHeart} from "react-icons/bi";
 
 function ShelterInfoCard({speciality, name, profilepic}) {
-    return <> <div className="shelter-card">
+    let navigate= useNavigate();
+
+    const navigateToDonate = () => {
+        navigate(`/donate/${name}`);
+    }
+
+    return <> <div className="shelter-card" onClick={() => navigate(`/shelters/details/${name}`)}>
         <div className="title"><h4>{name}</h4>
             <hr/>
             <p>speciality: {speciality}</p>
@@ -23,7 +29,7 @@ function ShelterInfoCard({speciality, name, profilepic}) {
     </div>
 
     <div className="actions">
-        <StandardButton size="small" icon={<FiDollarSign/>} text="donate"/>
+        <StandardButton size="small" icon={<BiSolidDonateHeart/>} text="donate" onclick={navigateToDonate}/>
         <StandardButton size="small" icon={<IoIosPaw/>} text="animals"/>
     </div>
 </>

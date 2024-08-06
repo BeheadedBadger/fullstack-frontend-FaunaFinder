@@ -16,6 +16,19 @@
   color: whitesmoke;
 }
 
+input {
+  border-radius: 10px 0 10px 0;
+  border: 1px lightgray solid;
+  background-color: whitesmoke;
+  padding: 10px;
+}
+
+input:focus {
+  background-color: var(--yellow);
+  border: 2px var(--lightpurple) solid;
+  outline: none;
+}
+
 body {
   padding: 0;
   margin: 0;

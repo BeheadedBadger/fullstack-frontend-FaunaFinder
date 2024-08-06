@@ -2,12 +2,26 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "./Login.css"
 import { AuthContext } from '../context/AuthContext';
+import {useNavigate} from "react-router-dom";
+import StandardButton from "../components/StandardButton.jsx";
 
 function Login(){
     const [error, toggleError] = useState(false);
     const [password, setPassword] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const { login, loggedIn, fetchUserData } = useContext(AuthContext);
+    const { login, loggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loggedIn) {
+            navigate("/profile");
+        }
+    });
+
+    function handleChangeUsername(value) {
+        toggleError(false);
+        setUsername(value);
+    }
 
     async function logIn(e) {
         e.preventDefault();
@@ -29,18 +43,22 @@ function Login(){
     }
 
     return <div className="container-column">
-        {error && <div className="error-text">Something went wrong</div>}
         {!(loggedIn) &&
         <form onSubmit={logIn}>
             <label htmlFor="username"><p>Username:</p>
                 <input type="text" id="username" value={username}
-                       onChange={(e) => setUsername(e.target.value)}></input>
+                       onChange={(e) => {handleChangeUsername(e.target.value)}}></input>
             </label>
             <label htmlFor="password"><p>Password:</p>
                 <input type="password" id="password" value={password}
                        onChange={(e) => setPassword(e.target.value)}></input>
             </label>
-            <button type="submit" value="Submit">Submit</button>
+
+            {(username === "" || password === "") && <> <StandardButton disabled = {true} size="small" text="Submit"/>
+                <>not all required fields filled in</>
+            </>}
+            {!(username === "" || password === "") && <StandardButton size="small" type="submit" value="Submit" text="Submit"/>}
+            {error && <div className="error-text">Something went wrong! Try again.</div>}
         </form>}
     </div>
 }
