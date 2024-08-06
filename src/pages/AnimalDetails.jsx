@@ -9,7 +9,7 @@ import ("./AnimalDetails.css")
 function AnimalDetails() {
     const {id} = useParams();
     const {animalData} = useContext(AnimalContext);
-    const {loggedIn, user} = useContext(AuthContext)
+    const {loggedIn, user, fetchUserData} = useContext(AuthContext)
     const [localAnimal, setLocalAnimal] = useState(null);
     const [status, setStatus] = useState("starting")
     const [warning, setWarning] = useState("")
@@ -27,6 +27,8 @@ function AnimalDetails() {
                     });
 
                 console.log(addToFav);
+                toggleFaved(true);
+                fetchUserData(user.username, localStorage.getItem("token"));
             } catch (e) {
                 console.error(e);
             }
@@ -37,8 +39,27 @@ function AnimalDetails() {
         }
     }
 
+    async function RemoveFromFavourites() {
+        if (loggedIn) {
+            try {
+                const removeFromFav = await axios.delete(`http://localhost:8080/users/fav/${localStorage.getItem("user_username")}/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    });
 
-    if (status === "starting") {
+                console.log(removeFromFav);
+                toggleFaved(false);
+                fetchUserData(user.username, localStorage.getItem("token"));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
+
+
+                if (status === "starting") {
         setStatus("loading");
         for (let i = 0; i < animalData.animals.length; i++) {
             let externalId = animalData.animals[i].id;
@@ -63,7 +84,7 @@ function AnimalDetails() {
                 <img className="photo-animal" src={localAnimal.animalPhoto} alt={localAnimal.name}/> }
                 <div className="text-animal">
                     <h2>{localAnimal.name}
-                        {faved && <IoHeart className="faved-icon"/>}
+                        {faved && <IoHeart className="faved-icon" onClick={RemoveFromFavourites}/>}
                         {!faved && <IoHeart className="fav-icon" onClick={AddToFavourites}/>}
                         </h2>
                     {warning && <p>{warning}</p>}

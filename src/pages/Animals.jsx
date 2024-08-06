@@ -38,11 +38,11 @@ function Animals() {
                     console.log(categoryToCaps + " : " + category.toUpperCase());
                     if (categoryToCaps === category.toUpperCase()) {
                         console.log(animalData.animals[i]);
+                        animalData.animals[i].faved = false;
                         for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
                             if (user.username === animalData.animals[i].favourites[f].username) {
                                 animalData.animals[i].faved = true;
                             }
-                            else { animalData.animals[i].faved = false; }
                         }
                         filteredAnimals.push(animalData.animals[i]);
                     }
