@@ -1,0 +1,73 @@
+.field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: var(--darkpurple);
+}
+
+.field input {
+    margin: 5px 10px;
+    width: 100px;
+}
+
+.field .donation-icon {
+    font-size: 30px;
+    margin: 5px 10px;
+}
+
+select {
+    border-radius: 10px 0 10px 0;
+    border: 1px lightgray solid;
+    background-color: whitesmoke;
+    padding: 10px;
+    margin: 5px 10px;
+    width: 100px;
+}
+
+.container-donation {
+    margin: 50px;
+}
+
+.container-donation form {
+    margin: 0;
+    padding: 0;
+}
+
+.category-buttons-method {
+    display: flex;
+    flex-direction: row;
+}
+
+.category-buttons-method .off {
+    color: lightgrey;
+    padding: 10px;
+    border: 2px solid lightgrey;
+    background-color: whitesmoke;
+    width: 75px;
+    height: 75px;
+}
+
+.category-buttons-method .on {
+    color: var(--darkpurple);
+    background-color: var(--yellow);
+    border: 0 solid;
+    line-height: 50px;
+    width: 75px;
+    height: 75px;
+}
+
+.payment-icon {
+    font-size: 45px;
+    margin: 5px;
+}
+
+.category-buttons-method .container-column {
+    padding: 5px;
+}
+
+.container-donation button {
+    width: 250px;
+    height: 50px;
+}

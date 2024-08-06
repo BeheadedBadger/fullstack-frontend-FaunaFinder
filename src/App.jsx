@@ -14,6 +14,7 @@ import {AuthContext} from './context/AuthContext';
 import AnimalDetails from "./pages/AnimalDetails.jsx";
 import ShelterDetails from "./pages/ShelterDetails.jsx";
 import Favourites from "./pages/Favourites.jsx";
+import Donate from "./pages/Donate.jsx";
 
 function App() {
     const {loggedIn} = useContext(AuthContext);
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/shelters/details/:id" element={<ShelterDetails/>}/>
                     <Route path="/walloffame" element={<WallOfFame/>}/>
                     <Route path="/newanimal" element={<UploadNewAnimal/>}/>
+                    <Route path="/donate/:shelter" element={<Donate/>}/>
                 </Routes>
             </div>
         </div>
