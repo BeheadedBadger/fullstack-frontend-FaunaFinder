@@ -4,9 +4,11 @@ import React, {useContext, useState} from "react";
 import {FaGooglePay, FaIdeal, FaPaypal} from "react-icons/fa";
 import {AuthContext} from "../context/AuthContext.jsx";
 import {useParams} from "react-router-dom";
+import axios from "axios";
 
 function Donate() {
 const [amount, setAmount] = React.useState(25);
+const [frequency, setFrequency] = React.useState("Once");
 const [paymentMethod, setPaymentMethod] = React.useState("");
 const [completed, toggleCompleted] = React.useState(false);
 const {loggedIn, user} = useContext(AuthContext);
@@ -14,11 +16,23 @@ const {shelter} = useParams();
 
 function processPayment(e) {
     e.preventDefault()
-    toggleCompleted(true);
+    handleSubmit().then(r => toggleCompleted(true));
 }
 
-function handleAmountChange() {}
-function handleFrequencyChange() {}
+async function handleSubmit() {
+    try {
+        const result = await axios.post("http://localhost:8080/donate",
+            {
+                amount: amount,
+                frequency: frequency,
+                sending: user.username,
+                receiving: shelter,
+            }, {});
+        console.log(result);
+    } catch (e) {
+        console.error(e);
+    }
+}
 
     const TypeUnset = (e) => {
         e.preventDefault();
@@ -48,10 +62,10 @@ function handleFrequencyChange() {}
             <form onSubmit={processPayment}>
                 <div className="field">
                     <div className="field">
-                        Amount: € <input type="number" onChange={handleAmountChange} value={amount}/>,-
+                        Amount: € <input type="number" onChange={(e) => setAmount(e.target.valueAsNumber)} value={amount}/>,-
                     </div>
                     <div className="field">
-                        Frequency: <select onChange={handleFrequencyChange}>
+                        Frequency: <select onChange={(e) => setFrequency(e.target.value)}>
                         <option>Once</option>
                         <option>Weekly</option>
                         <option>Monthly</option>
