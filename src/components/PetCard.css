@@ -162,3 +162,44 @@ article {
 .filler-img-container:hover .filler-img {
     font-size: 75px;
 }
+
+.delete {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 25px;
+    color: var(--darkpurple);
+}
+
+.delete-icon {
+    font-size: 25px;
+    color: lightcoral;
+}
+
+.delete .yes-button {
+    background-color: darkseagreen;
+    height: 25px;
+    width: 40px;
+    color: whitesmoke;
+    margin: 2px 2px 2px 20px;
+}
+
+.delete .yes-button:hover {
+    background-color: darkolivegreen;
+}
+
+.delete .no-button {
+    background-color: lightcoral;
+    height: 25px;
+    width: 40px;
+    margin: 2px 20px 2px 2px;
+    color: whitesmoke;
+}
+
+.delete .no-button:hover {
+    background-color: darkred;
+}
+
+.delete-icon:hover {
+    color: darkred;
+}

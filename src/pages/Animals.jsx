@@ -20,6 +20,7 @@ function Animals() {
     {/*Filter animals*/}
     useEffect(() => {
         function filter(e) {
+
         if (!category)
             for (let i = 0; i < animalData.animals.length; i++) {
                 for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
@@ -49,6 +50,7 @@ function Animals() {
                 }
                 console.log(category + " " + filteredAnimals.length + " " + animalData.animals.length);
                 setAnimalsToDisplay(filteredAnimals);
+
                 setStatus("done");
             }
         }
@@ -135,7 +137,8 @@ function Animals() {
                                  species={animal.commonSpeciesName}
                                  warning={animal.warning}
                                  warningtext={animal.warningExplanation}
-                                faved={animal.faved}/>
+                                 faved={animal.faved}
+                                 shelter={animal.shelter.username}/>
                     </li>
                 )
             })}
@@ -154,7 +157,8 @@ function Animals() {
                                          species={animal.commonSpeciesName}
                                          warning={animal.warning}
                                          warningtext={animal.warningExplanation}
-                                         faved={animal.faved}/>
+                                         faved={animal.faved}
+                                         shelter={animal.shelter.username}/>
                             </li>
                         )
                     })}
