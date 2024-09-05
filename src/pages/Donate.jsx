@@ -1,6 +1,6 @@
 import {BiSolidDonateHeart} from "react-icons/bi";
 import "./Donate.css"
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {FaGooglePay, FaIdeal, FaPaypal} from "react-icons/fa";
 import {AuthContext} from "../context/AuthContext.jsx";
 import {useParams} from "react-router-dom";
@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 function Donate() {
 const [amount, setAmount] = React.useState(25);
 const [paymentMethod, setPaymentMethod] = React.useState("");
+const [frequency, setFrequency] = React.useState("");
 const [completed, toggleCompleted] = React.useState(false);
 const {loggedIn, user} = useContext(AuthContext);
 const {shelter} = useParams();
@@ -17,8 +18,13 @@ function processPayment(e) {
     toggleCompleted(true);
 }
 
-function handleAmountChange() {}
-function handleFrequencyChange() {}
+function handleAmountChange(value) {
+    setAmount(value);
+}
+
+function handleFrequencyChange(value) {
+    setFrequency(value);
+}
 
     const TypeUnset = (e) => {
         e.preventDefault();
@@ -48,10 +54,10 @@ function handleFrequencyChange() {}
             <form onSubmit={processPayment}>
                 <div className="field">
                     <div className="field">
-                        Amount: € <input type="number" onChange={handleAmountChange} value={amount}/>,-
+                        Amount: € <input type="number" onChange={() => handleAmountChange(value)} value={amount}/>,-
                     </div>
                     <div className="field">
-                        Frequency: <select onChange={handleFrequencyChange}>
+                        Frequency: <select onChange={() => handleFrequencyChange(value)}>
                         <option>Once</option>
                         <option>Weekly</option>
                         <option>Monthly</option>
@@ -88,7 +94,8 @@ function handleFrequencyChange() {}
                     </div>
                 </div>
                 </div>
-                <button type="submit"> Continue to Payment -> </button>
+                {!paymentMethod && <button disabled={true}>Continue to Payment -> </button>}
+                {paymentMethod && <button type="submit"> Continue to Payment -> </button>}
             </form>
             </>}
 

@@ -18,20 +18,18 @@ function PetCard({name, sex, id, image, age, species, warning, warningtext, fave
                         Authorization: `Bearer ${token}`
                     }
                 });
-            console.log(result);
             window.location.reload();
         }
         catch (e) {console.error(e)}
     }
 
         const navigate = useNavigate();
-        const {user, loggedIn} = useContext(AuthContext);
+        const {user} = useContext(AuthContext);
         const navigateToAnimal = (id) => {
             navigate(`/animals/details/${id}`)
         }
         const [deleteDialog, toggleDeleteDialog] = useState(false);
 
-        console.log(user.role + " " + shelter + " " + user.username)
         return (
             <>
                 <div

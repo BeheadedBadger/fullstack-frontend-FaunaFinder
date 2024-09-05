@@ -19,7 +19,6 @@ function SignUp() {
     const [image, setImage] = React.useState(null);
     const [speciality, setSpeciality] = React.useState("");
     const [previewURLPhoto, setPreviewURLPhoto] = React.useState("");
-    const { login, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     function handleImageChange(e) {
@@ -216,6 +215,7 @@ function SignUp() {
                         Not all required fields have been filled in
                        </>}
                     {!(username === "" || password === "" || role === "") && <StandardButton size="medium" type="submit" value="Submit" text="Submit"/>}
+                    {error && <>⚠️ {error}</>}
                 </form>
             }
     </div>
