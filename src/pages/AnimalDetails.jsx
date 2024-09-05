@@ -26,7 +26,6 @@ function AnimalDetails() {
                         }
                     });
 
-                console.log(addToFav);
                 toggleFaved(true);
                 fetchUserData(user.username, localStorage.getItem("token"));
             } catch (e) {
@@ -49,7 +48,6 @@ function AnimalDetails() {
                         }
                     });
 
-                console.log(removeFromFav);
                 toggleFaved(false);
                 fetchUserData(user.username, localStorage.getItem("token"));
             } catch (e) {
@@ -63,10 +61,8 @@ function AnimalDetails() {
         setStatus("loading");
         for (let i = 0; i < animalData.animals.length; i++) {
             let externalId = animalData.animals[i].id;
-            console.log(externalId.toString() + " : " + id.toString())
 
             if (externalId.toString() === id.toString()) {
-                console.log("match found");
                 setLocalAnimal(animalData.animals[i])
                 for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
                     if (user && animalData.animals[i].favourites[f].username === user.username) {

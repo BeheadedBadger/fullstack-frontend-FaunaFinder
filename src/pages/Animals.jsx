@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PetCard from "../components/PetCard";
 import {AnimalContext} from "../context/AnimalContext.jsx";
 import "./Animals.css";
@@ -19,7 +19,7 @@ function Animals() {
 
     {/*Filter animals*/}
     useEffect(() => {
-        function filter(e) {
+        function filter() {
 
         if (!category)
             for (let i = 0; i < animalData.animals.length; i++) {
@@ -36,9 +36,7 @@ function Animals() {
                 for (let i = 0; i < animalData.animals.length; i++) {
                     const categoryToCaps = typeof animalData.animals[i].category === 'string' ? animalData.animals[i].category.toUpperCase() : "";
 
-                    console.log(categoryToCaps + " : " + category.toUpperCase());
                     if (categoryToCaps === category.toUpperCase()) {
-                        console.log(animalData.animals[i]);
                         animalData.animals[i].faved = false;
                         for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
                             if (user.username === animalData.animals[i].favourites[f].username) {
@@ -48,7 +46,6 @@ function Animals() {
                         filteredAnimals.push(animalData.animals[i]);
                     }
                 }
-                console.log(category + " " + filteredAnimals.length + " " + animalData.animals.length);
                 setAnimalsToDisplay(filteredAnimals);
 
                 setStatus("done");

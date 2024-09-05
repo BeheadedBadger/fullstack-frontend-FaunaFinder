@@ -8,13 +8,12 @@ function Shelters(){
 
     {/*Find all users labeled as shelter*/}
     useEffect(() => {
-        async function findAll(e) {
+        async function findAll() {
             let usersFound = [];
             let sheltersFound = [];
 
         try {
             const result = await axios.get('http://localhost:8080/users');
-            console.log(result.data);
             usersFound = result.data;
 
             for(let i=0; i < usersFound.length; i++) {
@@ -24,7 +23,6 @@ function Shelters(){
             }
 
             setShelters(sheltersFound);
-            console.log(sheltersFound);
             } catch (e) {
             console.error(e);
         }

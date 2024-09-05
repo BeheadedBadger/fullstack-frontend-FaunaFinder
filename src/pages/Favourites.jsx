@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import PetCard from "../components/PetCard.jsx";
 import "./Favourites.css";
 import {AnimalContext} from "../context/AnimalContext.jsx";
+import Loader from "../components/Loader.jsx";
 
 function Favourites() {
     const {loggedIn, user} = useContext(AuthContext);
@@ -16,12 +17,11 @@ function Favourites() {
 
     {/*Filter animals*/}
     useEffect(() => {
-        function filter(e) {
+        function filter() {
                 setStatus("loading");
                 for (let i = 0; i < animalData.animals.length; i++) {
                     for (let f = 0; f < animalData.animals[i].favourites.length; f++) {
                         if (animalData.animals[i].favourites[f].username === user.username) {
-                        console.log(animalData.animals[i]);
                         filteredAnimals.push(animalData.animals[i]);
                     }
                 }
@@ -33,7 +33,7 @@ function Favourites() {
     }, [user]);
 
     return <div className="container-column">
-
+        {status === "loading" && <Loader/>}
         {(!loggedIn || !user) && <><h4> You have to be logged in to add animals to your favourites. </h4>
             <Link
                 to="signin"

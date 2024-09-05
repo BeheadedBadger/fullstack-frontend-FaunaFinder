@@ -24,7 +24,6 @@ function AnimalContextProvider( {children} ) {
 
             for (let i = 0; i < result.data.length; i++) {
                 let tempAnimal = result.data[i];
-                console.log(tempAnimal.animalPhoto)
 
                 if (tempAnimal.animalPhoto !== null) {
                     try {
@@ -38,7 +37,6 @@ function AnimalContextProvider( {children} ) {
 
                     }
                 }
-                console.log(tempAnimal.animalPhoto);
                 animalsFound.push(tempAnimal);
             }
             setAnimalData({

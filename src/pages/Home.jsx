@@ -3,7 +3,6 @@ import { GiSandSnake, GiRat, GiDove, GiScarabBeetle, GiTropicalFish, GiPawHeart 
 import {useNavigate} from "react-router-dom";
 import StandardButton from "../components/StandardButton";
 import React from "react";
-import Loader from "../components/Loader.jsx";
 
 function Home() {
 

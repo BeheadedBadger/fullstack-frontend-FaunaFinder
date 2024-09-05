@@ -65,18 +65,16 @@ function UploadNewAnimal(){
             role = localStorage.getItem("user_role");
             token = localStorage.getItem("token");
 
-            console.log("On loading the page, the token is:" + token);
-
-            if (!loggedIn) {
-                console.log("Login first");
+            if (loggedIn === "false" || !loggedIn) {
+                console.log("Log in first");
                 setStatus("Login");
             }
-            if (loggedIn && role !== "SHELTER") {
+            if (loggedIn === "true" && role !== "SHELTER") {
                 console.log("You need to be logged in as a shelter")
                 setStatus("NotShelter");
             }
 
-            if (loggedIn && role === "SHELTER") {
+            if (loggedIn === "true" && role === "SHELTER") {
                 console.log("Nice! You can upload animals.")
                 setStatus("Authorized");
             }
@@ -88,8 +86,6 @@ function UploadNewAnimal(){
     async function sendImage(token, id, image) {
         const formData = new FormData();
         formData.append('file', image);
-        console.log("On submitting the image the token is " + token);
-
         try {
             const result = await axios.post(`http://localhost:8080/animals/${id}/photo`, formData, {
                 headers: {
@@ -97,7 +93,6 @@ function UploadNewAnimal(){
                     Authorization: `Bearer ${ token }`,
                 },
             });
-            console.log(result);
         }
         catch (error) {
             console.error( error );
@@ -107,11 +102,8 @@ function UploadNewAnimal(){
     async function addAnimal(e) {
         toggleLoading(true);
         e.preventDefault();
-        console.log("Add animal attempt");
 
         token = localStorage.getItem("token");
-
-        console.log("On submitting the animal, the token is: " + token)
 
         try {
             const result = await axios.post("http://localhost:8080/animals",
@@ -131,7 +123,6 @@ function UploadNewAnimal(){
                         Authorization: `Bearer ${token}`
                     }
                 });
-            console.log(result);
             const id = result.data.id;
             console.log("Successfully added animal.");
 
@@ -144,8 +135,6 @@ function UploadNewAnimal(){
                             Authorization: `Bearer ${token}`
                         }
                     });
-
-                console.log(assigntoshelter);
             }
             catch (e) {
                 console.error(e);
@@ -153,7 +142,6 @@ function UploadNewAnimal(){
 
             //Upload image
             if (image !== null) {
-                console.log(image);
                 await sendImage(localStorage.getItem("token"), id, image);
             }
 
@@ -473,7 +461,7 @@ function UploadNewAnimal(){
                         <div className="input-block">
                             <label htmlFor="warning">
                                 <input type="checkbox" id="warning" name="warning" value="warning" checked={warning}
-                                        onChange={(e) => setWarning(!warning)}/>
+                                        onChange={() => setWarning(!warning)}/>
                                 Experienced owners only</label>
                             {warning && <label htmlFor="warningtext"><p>Brief elaboration on why they are only suitable for experienced owners:</p>
                             <input type="warningtext" id="warningtext" value={warningExplanation}

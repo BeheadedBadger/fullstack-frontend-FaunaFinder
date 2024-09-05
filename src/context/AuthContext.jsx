@@ -82,8 +82,6 @@ function AuthContextProvider( { children } ) {
     async function fetchUserData( id, token ) {
         let dataUrl = "";
 
-        console.log(id);
-
         try {
             const download = await axios.get( `http://localhost:8080/users/${id}/photo`, {
                 headers: {
@@ -107,7 +105,7 @@ function AuthContextProvider( { children } ) {
 
             localStorage.setItem("user_username", result.data.username);
             localStorage.setItem("user_role", result.data.role);
-            localStorage.setItem("loggedin", true);
+            localStorage.setItem("loggedin", "true");
 
             setAuth( {
                 loggedIn : true,

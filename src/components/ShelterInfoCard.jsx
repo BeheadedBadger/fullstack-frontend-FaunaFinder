@@ -1,12 +1,11 @@
 import {GiDove, GiPawHeart, GiRat, GiSandSnake, GiScarabBeetle} from "react-icons/gi";
 import "./ShelterInfoCard.css"
-import {FiDollarSign} from "react-icons/fi";
 import StandardButton from "./StandardButton.jsx";
 import {IoIosPaw} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
 import {BiSolidDonateHeart} from "react-icons/bi";
 
-function ShelterInfoCard({speciality, name, profilepic}) {
+function ShelterInfoCard({speciality, name}) {
     let navigate= useNavigate();
 
     const navigateToDonate = () => {
